@@ -1,0 +1,31 @@
+S12-L1-Bootstrap Crash Course
+
+😘🎈🥰Bootstrap alternatives which some people use:
+1. GridLayout
+2. FlexBox
+3. semntic UI
+4. materialized css
+
+😘🎈🥰Make Writing HTML job easy:
+emmet: https://emmet.io/
+Free course by H.C : https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa3JDSk5LTzRDX2t0V3RQdHNZUVdMWEF1RzhhQXxBQ3Jtc0ttTE9YUTdXVHpDYkxLMGZsN2RxZFdwNkNKVjg3MkR4ZGE2SDZ5RzBCUWlsS0xTUnlJcWVBUW14Y0VEbjJqeWdpMkcxOUF1MFowQ00zaFYwYXlsb1ZwZVdOeWVfSXZkRFowV3BIZTR2Nk9CZWlYdW5oOA&q=http%3A%2F%2Fcourses.learncodeonline.in%2Flearn%2Femmet-course
+example:
+i want ot have division with class name venki, inside i want to have h2, then inside h2 i want to have span then write
+div.hitesh>h2>span then press Tab button then it will create the html code like
+<div class='Venki'>
+    <h2> <span> </span> </h2>
+</div>
+😍😍😍
+
+LIVE SERVER - in visual studio
+Install live server by Ritwick Dey which will create temp server for us and save chages in app will reflect automatically like mono
+my live server address: http://127.0.0.1:5500/index.html
+
+
+Main Cheese PPl use in bootstrap are:
+1. components-> buttons: https://getbootstrap.com/docs/5.0/components/buttons/ 
+2. dividing pages - bootstrap has 12 coloumns to divide
+3. cards - https://getbootstrap.com/docs/5.0/components/card/
+4. forms
+5. Border
+6. etc...

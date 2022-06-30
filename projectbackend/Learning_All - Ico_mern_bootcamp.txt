@@ -1,0 +1,3303 @@
+Learn Code Online - MERN BootCamp
+https://courses.learncodeonline.in/learn/home/Full-Stack-MERN-Bootcamp
+
+Node.js and NPM
+As soon as we install node.js it gives utility called NPM through which we can install many other libraries etc easily
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+*******************************************************😍😘🥰 Section-1 : Introduction to Full Stack😍😘🥰********************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+***************************************************😍😘🥰 Section-2: Express Server and Database Modelling😍😘🥰********************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+*******************************************************😍😘🥰 Section-3: Preparing database models😍😘🥰********************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+****************************************************😍😘🥰 Section-4: Creating Schema with mongoose😍😘🥰********************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+*******************************************************😍😘🥰 Section-5 : DataBase Connectivity😍😘🥰********************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+Lesson-2
+Remember one day definitley we need to deploy our project into "somebody else computer" also you can call as "server"/"host" (Like Amazon AWS or Microsoft Azures or  Digital Ocean or SAP cloud platfrom etc) and many people will start using it
+SO here everyone want to not to disclose sensitive information like payment gateway, db port and connection, project port bcz hackers can do mischevious things to our project hence we need to use something called as VARIABLES
+For this purpose you can use dotenv library which is very useful
+https://www.npmjs.com/package/dotenv
+
+https://stackoverflow.com/questions/18864677/what-is-process-env-port-in-node-js
+QUESTION
+what is process.env.PORT || 3000 used for in Node.js? I saw this somewhere:
+
+ app.set('port', process.env.PORT || 3000);
+If it is used to set 3000 as the listening port, can I use this instead?
+
+app.listen(3000);
+If not why?
+
+ANSWER
+In many environments (e.g. Heroku), and as a convention, you can set the environment variable PORT to tell your web server what port to listen on.
+So process.env.PORT || 3000 means: whatever is in the environment variable PORT, or 3000 if there's nothing there.
+So you pass that to app.listen, or to app.set('port', ...), and that makes your server able to accept a "what port to listen on" parameter from the environment.
+If you pass 3000 hard-coded to app.listen(), you're always listening on port 3000, which might be just for you, or not, depending on your requirements and the requirements of the environment in which you're running your server.
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//*************************************************😍😘🥰 Section-6: Middleware and initial routes 😍😘🥰***************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+Lesson-1 : what is middleware
+//MIDDLEWARE concept
+//isAdmin and isLoggedIn is middleware that to its customized middle ware bcz its says next() 
+//ERROR Remember - you have to pass next whenever you write middleware then you have to use next() inside else the error will comes up as "ReferenceError: next is not defined"
+const isAdmIn = (req, res, next) => {   //defininng and assighning function Using Arrow => funtion 
+    console.log("isAdmin is running");
+    next()
+};
+
+const isLoggedIn = function (req, res, next) {   //defininng and assighning function without Using Arrow => funtion (default way)
+    console.log("isLogged in is passed or running");
+    next()
+};
+
+const admin = (req, res) => {
+    return res.send("this is admin dashbaord");
+};
+
+app.get("/admin", isLoggedIn, isAdmIn, admin);
+
+#################################################################################################################################
+Lesson-2: Most Common Used Middlewares
+//MIDDLEWARE - Most needed or most common Used Middlwares by programmer
+
+//Writing middleware for use in Express apps (THEORY must know)
+//https://expressjs.com/en/guide/writing-middleware.html
+//Middeleware Example - bodyparser (Node.js body parsing middleware. Parse incoming request bodies in a middleware before your handlers, available under the req.body property.) 
+//https://www.npmjs.com/package/body-parser
+//Middeleware Example - Cookie parser (Parse Cookie header and populate req.cookies with an object keyed by the cookie names. Optionally you may enable signed cookie support by passing a secret string, which assigns req.secret so it may be used by other middleware.) 
+//https://www.npmjs.com/package/cookie-parser
+//Middleware Examole - CORS (CORS - Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served.[)
+//https://www.npmjs.com/package/cors and https://en.wikipedia.org/wiki/Cross-origin_resource_sharing 
+
+//HOW TO load middleware
+//app.use() //To load the middleware function, call app.use(), specifying the middleware function. For example, the following code loads the myLogger middleware function before the route to the root path (/).
+
+
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+
+app.use(cookieParser());
+app.use(cors());
+// parse application/json
+//app.use(bodyParser.json()); //getting message as "'bodyParser' is deprecated.ts(6385)" WHy Bcz see below
+//Explanation: The default value of the extended option has been deprecated, meaning you need to explicitly pass true or false value.
+//Note for Express 4.16.0 and higher: body parser has been re-added to provide request body parsing support out-of-the-box.
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
+#################################################################################################################################
+Lesson-7: Fixing models bug and postman
+
+in postman to send the json for post method use raw body to send json data
+http://localhost:7000/api/signup
+in Headers - Key: Content-Type, value: application/json
+in Body you select "raw" and can write json example
+{
+	"name":"Venki",
+	"lastname":"KS",
+	"age":"2"
+}
+
+Postman post method Body:
+raw: will be used while user sending file in json format
+form-data OR x-www-form-urlencoded : use this when you want user(client request) to upload binary data like images, audio files or pdf etc
+
+AND EVEN in project -> app.js we need to use bodyparser.urlencoded middleware if your user sending data in binar form OR use bodyparse.json if user(client request) sedning data in binary form
+
+#################################################################################################################################
+Lesson - 8 : Saving a user to database
+
+//create the file in controller folder with the same name as file created in routes folder
+
+//Importing the user.js model mongoose schema
+const User = require("../models/user"); 
+
+//we can directly exports the function using exports.functionName
+exports.signout = (req, res) => {
+    res.json({
+         message: "user signout successfully"
+     })
+ }
+
+
+exports.signup = (req, res) => {
+    const user = new User(req.body); //user is object of class User (which is a mongoose schema) and the data is passed by body paramaeter which send by client / browser
+    //since user is created by Class User which further created by mongoose we can access All DATABASE methods which MONGOOSE provide to us
+    //you can use objectofmongooseschema.save (here user.save) or populate etc etc .... methods
+    //user.save(); //it will just save the data to database thats good but i want to send some response to client hence use callbacks
+    //and any method of mongodb or firebase gives two parameters back to us those are "error" and the "same object which we tried to save to database"
+    user.save( (err, user) => { 
+        if(err){ 
+            //console.log(err); to display the complete error stack in the console
+			//res.send(err); to display the complete error stack to the clinet /broswer / postman 
+            return res.status(400).json({  //if error then send 400 status code and clear info to front end user in the Json format is good too
+                err: "NOT able to save user in DB"
+            })
+        }
+        else{
+             // res.json(user); //if no error send the complete object i.e user here, or we can selectively send required field as shown below
+            res.json({
+                Name:user.name,
+                Lastname:user.lastname,
+                EmailID:user.email, //email is the exact field name of monogdb response object / u can say field name of user database table
+                id:user._id //REMEMBER the field name is _id not just id
+            })
+        }
+ 
+    })
+};
+
+
+#################################################################################################################################
+Lesson - 9 and 10 : what about data validation / setting up validation in routes
+
+//express validator (to validate the data ex: before entering user/client data to db):  https://express-validator.github.io/docs/
+// https://express-validator.github.io/docs/custom-error-messages.html
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//************************************************🤩🤩🤩 Section-7 Authentication routes and tokens 🤩🤩🤩***************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+Lessson 1 - what are tokens and how to create them (THIS IS TO AUTHENTICATE USER AT ANY POINT OF TIME BY PASSING TOKEN INTO BROWSER)
+The lession in short story
+"WE CAN CREATE TOKEN BASED ON ID OR EMAIL AND EXPRESS 'JSON WEBTOKEN' HELPS US TO CREATE THIS, 
+NOW WE NEED TO PUT THESE TOKENS INTO USERS BROWSERS SO 'COOKIE PARSER' HELPS US HERE,
+AND WHEENVER WE NEED TO AUTHENTICATE A USER WHETHER HE LOGGED IN OR NOT THEN 'EXPRESS JWT' HELPS IN THAT"
+
+
+HOW DO I CREATE TOKEN? for that use one of the famous npm module given below
+1.jsonwebtoken
+https://www.npmjs.com/package/jsonwebtoken
+You can use HMCA SHA256 or RSA SHA256 to create token
+
+Synchronous Sign with default (HMAC SHA256)
+var jwt = require('jsonwebtoken');
+//token is variable, u can write as authtoken or venkitoken etc
+//foo:bar -> you can pass user mail or user id from database 
+//shhhh -> any random long string, you can pass anything which you like
+var token = jwt.sign({ foo: 'bar' }, 'shhhhh');  
+
+AFTER CREATING THE TOKEN, HOW TO PASS INTO USER'S BROWSER? for that use one of the famous npm module given below
+for this cookieParser will help us
+//app.js
+const cookieParser = require('cookie-parser'); //Cookie parser helps to create cookies, put value into and delete value from cookies
+
+HOW DO WE CONSTANTLY CHECK WHETHER THE USER LOGGED IN OR NOT? for that use one of the famous npm module given below
+2. express-jwt
+https://www.npmjs.com/package/express-jwt
+This module provides Express middleware for validating JWTs (JSON Web Tokens) through the jsonwebtoken module. The decoded JWT payload is available on the request object.
+Simply to say "It helps us to judge a user that he is authenticated or not? " :-) 😍
+
+Basic usage using an HS256 secret:
+
+var jwt = require('express-jwt');
+// /protected -> we can pass whatever the route we need to protect ffrom being authenticated, i.e only serve this route(path) when somebody logged in
+ app.get('/protected',
+  jwt({ secret: 'shhhhhhared-secret' }),
+  function(req, res) {
+    if (!req.user.admin) return res.sendStatus(401);
+    res.sendStatus(200);
+  });
+
+#################################################################################################################################
+Lesson - 2 : Sending tokens in cookie for user
+
+//auth.js from controller 🤩🤩🤩
+exports.signin = (req, res) => {
+    const errors = validationResult(req);
+    //previos controllers we were just passing all the info coming up from user into body to the database bcz all the data was needed
+    //now in here - signin, we are just curiuos about 2 info so from req.body we jsut extract email and password 
+    //ES6 - latest feature of javascript - OBJECT DESTRUCTURING 🥰 where we can mention only the required field from the array object
+    const {email, password} = req.body; //So here we extracted email and password which we can use directly in the code
+
+    //VALIDATION PART
+    if(!errors.isEmpty() ){
+        return res.status(422).json({
+         error: errors.array()[0].msg  
+        });
+    }
+
+
+    //findone matches very first match from the database
+    //Syntax: module.mogoosemethod({condition/property on which this findone need to search}, (callback parameters will be 'error' and 'object itslef') => { callback method})
+    User.findOne({email}, (err, user) =>{
+        // if the email does not exist then set the status code 400 and send proper customized error response in json format (instead of default error message which is good practice)
+        if(err || !user){
+            return res.status(400).json({ 
+                error:"User email does not exists"
+            })
+        }
+
+        //if email exist then check for match of the password if it not matches then get inside the if block
+        //for this will use AUTHENTICATE Method in User module... will make use of that method here
+        //while using this method we authenticate based on plainpassword which user enters which we need to pass here as parameter
+        if(!user.authenticate(password)){
+            res.status(401).json({  //initially i had forgot to put return here. return required bcz i dont want further execution of things over here
+                error:"Email and password do not match"
+            })
+        }
+
+        //CREATE TOKEN
+        //validation/check is done, now i have i have to signin 😍 the user i.e create token and put that toeken into cookies
+        //i will use jwt method signin, and i can create sign with any key value pair, so i use _id which given to me by user method 
+        //const token = jwt.sign({_id: user._id}, "shhhh") // or use any string u like... better to use ir via .env file
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET);
+        //PUT TOKEN INTO USER COOKIE
+        //🥵 Got error "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client" and app crashed when i sent the wrong pwd... need to fix it
+        //🥵 https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client
+        res.cookie("token", token, { expire: new Date() + 9999 }); 
+
+
+        //send response to front end
+        //lets use DECONSTRUCT feature on user object and send only required stuff to front end
+        const {_id, name, email, role} = user; 
+        return res.json({token, user: {_id, name, email, role} });
+    });
+};
+
+#################################################################################################################################
+Lesson - 5: what is bearer and signout route
+
+Bearer token
+In literal term it means somebody carrying something... there are bearer checks, bearer currency, bearer tokens etc... 
+in the case of bearer token, he is carrying token
+
+theory: official website of jwt
+https://jwt.io/introduction
+
+while making request from front end or through postman, we can't send the token just like that, everytime bearer is the person who take token along with him
+so entire syntax is like : Authorization: Bearer <token>
+
+this simply means WHEENVER YOU NEED AN AUTHORICATION NEEDS TO BE SEND UP WHAT YOU CAN DO IS, YOU CAN PASS IN HEADER Section
+HOW TO DO IT IN Postman?
+similar to Key(Content-type) value(application/json) pass token using bearer syntax in header 😍
+key(Authorization) value(Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNjFiZjk1OWJlOWYxMTg3YTRiNTciLCJpYXQiOjE2MjE1MTQzNjR9.n_Sauw_gKA9m5Kq1DGIQ5lr_he2yXIpUZG6VwMjtYoU)
+
+above token was the one which got generated when i signin/login for the user via post man. 
+{
+	"email":"ashahv.1994@gmail.com",
+	"password":"123456"
+}
+
+Respose which came back (the way i wrote code the same way the response came back 😂)
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNjFiZjk1OWJlOWYxMTg3YTRiNTciLCJpYXQiOjE2MjE1MTQzNjR9.n_Sauw_gKA9m5Kq1DGIQ5lr_he2yXIpUZG6VwMjtYoU",
+    "user": {
+        "_id": "609d61bf959be9f1187a4b57",
+        "name": "Asha",
+        "email": "ashahv.1994@gmail.com",
+        "role": 0
+    }
+}
+
+#################################################################################################################################
+Lesson - 6: how to protect a route 
+(using module express-jwt)
+
+Terminologies: we generally use in our application
+issignedin, isauthenticated, isAdmIn, issemiadmin etc
+
+Terminologies: differences
+issignedin -> means user logged in our application 
+isauthenticated -> user authenticated to check his account
+
+let's take example of facebook: 
+issignedin -> you can only check any fb user and prob photo max, but to see much more details u need to be signed in into facebook application.
+isauthenticated -> now can you change profile pic of your friends account? no, u can only cahnge yours
+
+SO 3 basics things are:
+1. 🤩 the routes that you want to see without logging in to the application
+2. 🤩 the routes he can see only after logged in to application
+3. 🤩 the authenticated routes which you allow the user to change stuff in only his account
+
+for this purpose we can use express-jwt 😍 
+https://www.npmjs.com/package/express-jwt
+
+//auth.js from controller folder
+//Protected routes
+ //good practice = for route protection methods try to use is like isSignedIn, isAdmin etcc
+exports.isSignedIn = expressJwt({   //pass object to expressJwt which we required/imported above in this file.. so to pass object use always {}
+    secret: process.env.SECRET,
+    userProperty: "auth"
+}); //remember in custom middlewares we always use next(), the reason why we not write next() here even isSignedIn is middleware is bcs the 'expressJwt' method already got next() covered up for us.. so we are not writing next() here
+
+
+//auth.js from routes folder
+//test this protected testroute via postman
+//this route only works if you are logged in else it will throw error which is correct() UnauthorizedError: No authorization token was found)
+// to get it work: first signin then send the created token in the header as Key (Authorization) , value(Bearer <token value>).. if the token is not correct then you will get error (UnauthorizedError: invalid token)
+router.get("/testroute", isSignedIn, (req, res) => {
+    res.send("a protected route"); 
+});
+
+#################################################################################################################################
+Lesson - 7: how to write custom middleware
+
+{😀
+//auth.js from controller folder
+//Protected route
+//good practice = for route protection methods try to use is like isSignedIn, isAdmin etcc
+exports.isSignedIn = expressJwt({   //pass object to expressJwt which we required/imported above in this file.. so to pass object use always {}
+    secret: process.env.SECRET,
+    userProperty: "authVarAnyName" //😊VIP- here the middleware just add property inside the rewuest which is here authVarAnyName which we can make use in other function, at routes functions etcc...
+}); //remember in custom middlewares we always use next(), the reason why we not write next() here even isSignedIn is middleware is bcs the 'expressJwt' method already got next() covered up for us.. so we are not writing next() here
+
+//auth.js from routes folder
+//test this protected testroute via postman
+//this route only works if you are logged in else it will throw error which is correct() UnauthorizedError: No authorization token was found)
+// to get it work: first signin then send the created token in the header as Key (Authorization) , value(Bearer <token value>).. if the token is not correct then you will get error (UnauthorizedError: invalid token)
+router.get("/testroute", isSignedIn, (req, res) => {
+   // res.send("a protected route"); 
+   res.json(req.authVarAnyName); //authVarAnyName is name of var which is coming from isSignedIn middleware from auth.js from conroller. it will return the id which is same is id which was given to us during signein in the postman... BASED ON THIS WE CAN DO LOT OF TESTING FURTHER
+});
+
+POSTMAN 📫📪📬📭
+POST:  http://localhost:7000/api/signin
+header:
+[{"key":"Content-Type","value":"application/json","description":""}]
+body raw: 
+{
+	"email":"ashahv.1994@gmail.com",
+	"password":"1234567"
+}
+
+response:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNjFiZjk1OWJlOWYxMTg3YTRiNTciLCJpYXQiOjE2MjE1MTYxOTl9.NFrdmbjPL1lub_NnqFyw9mfgdM5kjdo9p89uOUbMUbw",
+    "user": {
+        "_id": "609d61bf959be9f1187a4b57", //SAME 😍
+        "name": "Asha",
+        "email": "ashahv.1994@gmail.com",
+        "role": 0
+    }
+}
+
+GET: http://localhost:7000/api/testroute
+header:
+[{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNjFiZjk1OWJlOWYxMTg3YTRiNTciLCJpYXQiOjE2MjE1MTYxOTl9.NFrdmbjPL1lub_NnqFyw9mfgdM5kjdo9p89uOUbMUbw","description":""}]
+
+response:
+{
+    "_id": "609d61bf959be9f1187a4b57", //SAME 😍
+    "iat": 1621516199
+}
+
+😀}
+
+
+ //Custom middlewares
+exports.isAuthenticated = (req, res, next) => {
+    //req means data from frontend or userend... so through the frontedn we are goint to setup property called profile.. u can name anything u like and this profile only going to set if the user logged in.. like if you have email, id or role then only this propoerty will set
+    //SO we are creating variable checker... where req.profile will set up fron front end, authVarAnyName propoerty set from above SignedIn method, and then we chech the profile id which is set from the front end is equal to authVarAnyName id which set by middleware..
+    let checker = req.profile && req.authVarAnyName && req.profile._id == req.authVarAnyName._id; // use == to commpare the values, use === to compare the object itself
+    //if all of the above are true that means the user can autheticated and change things in his own account. 😍😍😍
+    if(!checker){
+        return res.status(403).json({
+            error:"Access Denied"
+        });
+    }
+    next();
+};
+
+exports.isAdmin = (req, res, next) => {
+    //how to check wherher the user is admin... its simple using our admin model property which we created
+    //again remember the profile is gonna set from front end
+    if(req.profile.role === 0){
+        return res.status(403).json({
+            erro: "You are not ADMIN, access to this page/route/feature denied for you"
+        })
+    }
+    next();
+};
+
+
+REMEMBER TO USE next() IN THESE CUSTOM Middlewares
+BCZ THESE next() ARE RESPONSIBLE FOR SENDING CONTROL FROM ONE MIDDLEWARE TO ANOTHER OR FROM LAST MIDDLEWARE TO SENDING UP THE response... 😍😍😍
+or your request will hanging 😱 in middle in the application somewhere and your application will never get response back
+so next() is very important 😍😍😎
+
+
+#################################################################################################################################
+Lesson - 8: where are we so far 
+
+T-shirt application Backend:
+
+Routes:
+auth: signup-post, signin-post, signout-get COMPLETED SO FAR
+
+controllers:
+auth: signup, signin, signout, isAdmIn!!, isAuthenticated!!, isSignedIn!! COMPLETED SO FAR (!! are all middleware for my reference... even isSignedIn is middleware, pls dont get confused here... its just middleware coming from express-awt js)
+
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//************************************************🤩🤩🤩 Section-8 Parameters and user controllers 🤩🤩🤩***************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+passing parameters in url and doing some perticular function like create certain product, delete, edit, profile account setting etc
+we use feature populate from mongosse in this section: learn bit about it
+https://mongoosejs.com/docs/populate.html
+
+Lesson - 1: what are PARAMS 
+https://expressjs.com/en/api.html#router.param
+
+
+router.param(name, callback)
+Adds callback triggers to route parameters, where name is the name of the parameter and callback is the callback function. Although name is technically optional, using this method without it is deprecated starting with Express v4.11.0 (see below).
+
+The parameters of the callback function are:
+
+1. req, the request object.
+2. res, the response object.
+3. next, indicating the next middleware function.
+4. The value of the name parameter.
+5. The name of the parameter.
+
+For example, when :user is present in a route path, you may map user loading logic to automatically provide req.user to the route, or perform validations on the parameter input.
+router.param('user', function (req, res, next, id) {
+  // try to get the user details from the User model and attach it to the request object
+  User.find(id, function (err, user) {
+    if (err) {
+      next(err)
+    } else if (user) {
+      req.user = user
+      next()
+    } else {
+      next(new Error('failed to load user'))
+    }
+  })
+})
+
+Param callback functions are local to the router on which they are defined. They are not inherited by mounted apps or routers. Hence, param callbacks defined on router will be triggered only by route parameters defined on router routes.
+
+A param callback will be called only once in a request-response cycle, even if the parameter is matched in multiple routes, as shown in the following examples.
+
+router.param('id', function (req, res, next, id) {
+  console.log('CALLED ONLY ONCE')
+  next()
+})
+
+router.get('/user/:id', function (req, res, next) {
+  console.log('although this matches')
+  next()
+})
+
+router.get('/user/:id', function (req, res) {
+  console.log('and this matches too')
+  res.end()
+})
+
+On GET /user/42, the following is printed:
+CALLED ONLY ONCE
+although this matches
+and this matches too
+
+etcc... read in https://expressjs.com/en/api.html#router.param
+
+
+###################################################################################################################################################
+Lesson - 2: Get ID from param
+
+//user.js from controller folder
+
+//First Import user model. User is variable whichim using for my user module
+const User = require("../models/user"); 
+
+//very first thing we should do after importing the model is export a method so that our params can candle
+
+//So lets create a method getUserByID (basically its a MIDDLEWARE)  
+//lets use findByID method then CHAIN😍 it to exec method which will does the execution and bring everything to us then we can do a CALLBACK here
+//whenever there is database callback (a callback in a database method (mongoose method)) REMEMBER ❤😍 it will always retrun 2 things i.e ERROR MESSAGE AND THE OBJECT ITSELF if it was found
+exports.getUserByID = (req, res, next, id) => {
+    User.findById(id).exec( (err,user ) => {
+        //if error is there or there is no user then return simply a response which first raised status code and chain 😍 a json response back with customized message
+        if(err || !user){ 
+            return res.status(400).json({
+                error: "No user was found in the DB"
+            })
+        }
+
+        //else means user found... so now lets store into REQUEST OBJECT😍 infact we can create an Object inside Request Object by just appending '.objectvarname' to 'req' object
+        req.profile = user
+
+        //since it is callback function (from line 7 only u can check) 100% compulsory to chain it back as next() 
+        next();
+    });  
+};
+
+//Unlike getUserByID metho getUser is simple method where whenever somebody calls this method we have to grab a user and send it back thats it 😂😂😂
+exports.getUser = (req, res) => {
+    //TODO: get back here for password
+
+    //in this getUser method we can make use of the object profile which we created in the getUserByID method... EFFICIENT WAY OF WRITING A CODE
+    return res.json(req.profile);
+};
+
+###################################################################################################################################################
+Lesson - 3: Handling User route
+
+//user.js from routes folder
+
+//In EVery project route First majorly we need to import Express
+const express = require("express");
+//from express import router
+const router = express.Router();
+
+//We will be bringing few stuff from user and auth controller as well so...
+const { getUserByID, getUser } = require("../controllers/user.js");
+const { isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth.js");
+
+//this getUserByID will POPULATE 😍❤ req.profile with that
+router.param("userId", getUserByID);
+
+//MY ALL TIME DOUBT CLEARED HERE 😍😍😍💕💕💕😍😍😍 
+//in the below methods when we make request on the router by passign parameter after user, the parameter will assign to :userID and automatically middleware userID will fire up (i.e 'router.param("userId", getUserByID);' gonna fireup)
+//and then in the above middleware will populate the field req.profile and sets it up (i.e it will create and assign new object called profile (with fetched database data) to request parameter of http) 😀😀😀😀😀
+
+// u can put anything but :userID is GOOD Way to name the param variable bcz going forward in our project we may use productId, cartId, bundleID etcc...
+//router.get("/user/:userId", getUser); 
+//LETS insert middleware inbetween to authenticate and check the signed in feature 😍❤❤ [REMEMBER U CAN MAKE USE OF MIDDLEWARE by INSERTING THEM ANYWHERE IN THE ROUTE Bcz they are middlewares 😍😍😍]
+router.get("/user/:userId", isSignedIn, isAuthenticated, getUser); 
+
+//what ever gonna come up need to be exported so...
+module.exports = router;
+
+###################################################################################################################################################
+Lesson - 4: Fixing a major bug
+
+Postman request - get: http://localhost:7000/api/user/60a769b48601021234fa5d18 
+header:
+[{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE3NjliNDg2MDEwMjEyMzRmYTVkMTgiLCJpYXQiOjE2MjE1ODQzMTl9.QdW-5Rw_WtVlHFwOiEeRAhUoJcD_X3cM4tJ2gIaRF4M","description":""}]
+
+response:
+{
+    "role": 0,
+    "purchases": [],
+    "_id": "60a769b48601021234fa5d18",
+    "name": "Ganesh",
+    "lastname": "Pujar",
+    "email": "gani@gmail.com",
+    "salt": "4287ba50-ba0b-11eb-a8b6-63a059935576",
+    "encry_password": "bbd7b476c9d8484bbf84a2e39e29677447ae9060e75a18ab16a121519e37d3ce",
+    "createdAt": "2021-05-21T08:05:08.856Z",
+    "updatedAt": "2021-05-21T08:05:08.856Z",
+    "__v": 0
+}
+
+SEE ABOVE THE GETUSERBYID method working perfectly fine but the response sending the profile object (var name i have given in the user.js ) which contains even salt and encry_password value which we shouldn't show in the front end or should not return in the response
+So make the string as null or undefined while retruning the response to front end 
+as it is response to front end ... making them undefined will not affect us
+
+//user.js from controllers folder
+//Unlike getUserByID method getUser is simple method where whenever somebody calls this method we have to grab a user and send it back thats it 😂😂😂
+exports.getUser = (req, res) => {
+    //TODO: get back here for password (done we edited in the section-8 lesson-4 fixing a major bug)
+    // "" will assign empty string, udefiened will not display that property only in the json repose to frontend
+   // req.profile.salt = "";
+   req.profile.salt = undefined;
+    req.profile.encry_password = undefined;
+
+    //in this getUser method we can make use of the object profile which we created in the getUserByID method... EFFICIENT WAY OF WRITING A CODE
+    return res.json(req.profile);
+};
+
+so the response now will be:
+{
+    "role": 0,
+    "purchases": [],
+    "_id": "60a769b48601021234fa5d18",
+    "name": "Ganesh",
+    "lastname": "Pujar",
+    "email": "gani@gmail.com",
+    "salt": "",
+    "createdAt": "2021-05-21T08:05:08.856Z",
+    "updatedAt": "2021-05-21T08:05:08.856Z",
+    "__v": 0
+}
+
+
+###################################################################################################################################################
+Lesson - 5: An assignement for USERS
+
+VENKI did it own 😍😍😍😍😍😍😍😍😍😍😍
+
+user.js - controllers folder
+
+//ASSIGNMENT section-8 lesson-5, fetch all users from the database and return the response
+exports.getAllUsers = (req, res) => {
+    User.find().exec( (err, allUsers) => {
+        if(err || !allUsers){
+            return res.status(400).json({
+                error:"No users exist in database. 0 users"
+            });
+        }
+        return res.json(allUsers);
+    });
+};
+
+
+user.js - routes folder
+const { getUserByID, getUser, getAllUsers } = require("../controllers/user.js"); //getAllUsers method is assignement to us from Hitesh... we can delete it now
+
+//ASSIGNMENT section-8 lesson-5, fetch all users from the database and return the response
+router.get("/allusers", getAllUsers);
+
+###################################################################################################################################################
+Lesson - 6: Get all users assignement solution
+
+Hitesh choudary wrote same code as venki wrote 😍😍😍
+
+###################################################################################################################################################
+Lesson - 7: Learn to update the user info
+
+user.js from controllers folder
+//Here we are updating on the stuff present in the database... so some additional things need to be done unlike above methods getUser, getUserByID etc
+exports.updateUser = (req, res) => {
+    User.findByIdAndUpdate(
+        {_id: req.profile._id}, //what data to find and update... for that will pass query using { databasefield: value} parentesis
+        {$set: req.body}, //what we want to update will pass it in $set, so here i'm updating everything which is there in my request body
+        {new: true, useFindAndModify: false},  //general parameters necessary while updating things in database (read them in mongoose documentory)
+        (err, updatinguserdata) => { //updatinguserdata just variable.. in hitesh code it is just user
+            if(err){
+                return res.status(400).json({
+                    error:"you are not authorized to update this user"
+                })
+            }
+
+            updatinguserdata.salt = undefined;
+            updatinguserdata.encry_password = undefined; 
+            res.json(updatinguserdata);
+        }
+    )
+};
+
+
+user.js from routes folder
+const { getUserByID, getUser, updateUser } = require("../controllers/user.js");
+
+//PUT request - updating things on database
+router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);
+
+###################################################################################################################################################
+Lesson - 8: Testing the PUT route for user
+
+Postman
+
+first we need to sign in bcz we need to pass token in put request bcz we have added auth middlewares
+
+post - http://localhost:7000/api/signin
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+body:
+{
+	"email":"ashahv.1994@gmail.com",
+	"password":"123456"
+}
+
+response:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNjFiZjk1OWJlOWYxMTg3YTRiNTciLCJpYXQiOjE2MjE1OTEzNDR9.xlBQRfclSi9yxQgT6ozcSdYpyekvOQSGRowo83iEBKQ",
+    "user": {
+        "_id": "609d61bf959be9f1187a4b57",
+        "name": "Asha",
+        "email": "ashahv.1994@gmail.com",
+        "role": 0
+    }
+}
+
+put - http://localhost:7000/api/user/609d61bf959be9f1187a4b57
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNjFiZjk1OWJlOWYxMTg3YTRiNTciLCJpYXQiOjE2MjE1OTEzNDR9.xlBQRfclSi9yxQgT6ozcSdYpyekvOQSGRowo83iEBKQ","description":""}]
+
+body:
+{
+	"lastname":"hv lastname Updated"
+}
+
+response:
+{
+    "role": 0,
+    "purchases": [],
+    "_id": "609d61bf959be9f1187a4b57",
+    "name": "Asha",
+    "lastname": "hv lastname Updated",
+    "email": "ashahv.1994@gmail.com",
+    "createdAt": "2021-05-13T17:28:31.082Z",
+    "updatedAt": "2021-05-21T10:02:54.092Z",
+    "__v": 0
+}
+
+
+###################################################################################################################################################
+Lesson - 9: using populate from other collections
+
+Theory:
+Mongoose polulate: it helps us reference documents from other collections
+https://mongoosejs.com/docs/populate.html
+
+user.js from controllers folder
+//Section -8 lesson -9, using populate from other collection
+exports.userPurchaseList = (req, res) => {
+    Order.find({user: req.profile._id}) //one more time to inform you that req.profile._id this is coming from my middleware
+    .populate("user", "_id name") //syntax of populate mongoose database function is - Usermodel.fetchmethod().populate("<the model/object u r updating", "<field1 field2 field3>")
+    .exec((err, urder) =>{
+        if(err){
+            return res.status(400).json({
+                error:"No order in this account"
+            })
+        }
+        return res.json(order)
+    })
+} 
+
+user.js from routes folder
+const { getUserByID, getUser, updateUser, userPurchaseList } = require("../controllers/user.js");
+
+//Section -8 lesson -9, using populate from other collection
+router.get("/orders/user/:userId", isSignedIn, isAuthenticated, userPurchaseList);
+
+###################################################################################################################################################
+Lesson - 10: One more middleware to update purchases 
+
+
+//section-8 lesson-10, one more MIDDLEWARE to update purchases 
+//🥰😘🥰just i'm writing a MIDDLEWARE here to udpate the purchase list of a user model whenever a user order a product
+//1. Here we are recieving some info from front end we are looping through it, creating an object from it, storing that object using push method into purchases array (i.e this one - let purchases = []) 
+//2. finally we will use model user, and we are finding and updating purchases to a document in db based on user id, and here we are handling error, if no error then we will move using next() bcz this is middleware
+exports.pushOrderInPurchaseList = (req, res, next) => {
+   
+   let purchases = []
+   //we are just looping through each product of an oder (one time amazon order we may have multiple products) and add them to local array purchases
+   req.body.order.products.forEach(product => {
+       //i'm using method of array object push.. what information i'm pushing = im pushing an object every single time
+       purchases.push({
+           _id: product._id,
+           name:product.name,
+           description: product.description,
+           category: product.category,
+           quantity: product.quantity,
+           amount:req.body.order.amount, //this will come from request body (ie i guess from front end)
+           transaction_id: req.body.order.transaction_id
+       });
+   });
+   
+   //store this in DB (use findoneandupdate db fuction - bcz the data which we push should get added to a perticular data if it is not there)
+   User.findOneAndUpdate(
+       {_id: req.profile._id},
+       {$push: {purchases: purchases} }, //as we are pushing array we cant use $set, we have to use $push 😍😍😍 {database array purchases: local purchases array which written above}
+       {new:true}, //😍😎😎remember from db we recieve error nad object iteself so here new:true -> after dupdating it will retrun the updated document not the old document
+       //no need to add .exec() here, directly u can write callback
+        (err, purchases) => {
+            if(err){
+                return res.status(400).json({
+                    error: "Unable to save purchase list"
+                })
+            }
+        next();      
+        }
+   ) 
+}
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//************************************************🤩🤩🤩 Section-9 Summer and Winter Collection - Category 🤩🤩🤩***************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+we do CRUD operation here
+
+###################################################################################################################################################
+Lesson -1 : Moving further for collections
+as for as project considered till here we have COMPLETED
+Hitesh choudary's coggle (which contain project architecture): check in the course?? (home page: https://coggle.it/ )
+
+till now the status of the project
+
+Project - SellTshirtBackEnd (Keys: ⭐parameter_passing_i_guessCheck?? ❗❗Middlewares ✅completed ❌YettoDO )
+Models:✅
+    1. user.js ✅
+    2. product.js ✅
+    3. category.js ✅
+    4. order.js ✅
+
+Routes: 
+    1. Authentication ✅
+        a. signup-post ✅
+        b. signin-post ✅
+        c. signout-post ✅
+    2. User ✅
+        a. read-get ✅
+        b. update-put ✅
+        c. parameterExtrat-params⭐ ✅
+        d. purchaselist-get ✅
+    3. category (its address whether winter collection or summer collection etc)
+        a. /category/create/:userId-POST (create)
+        b. categoryID PARAM (paramaeter Extractor)⭐
+        c. /category/categoryID - GET (read)
+        d. /category/categoryID/:userID - PUT (update)
+        e. /category/categoryID/:userID - DELETE (remove)
+        f. /categories - GET (getall)
+    4. order
+        a. /order/create/:userID - POST (create)
+        b. orderByID PARAMS⭐
+        c. /order/list/:userID - GET
+        d. /order/status/:userID - GET
+        e. /order/:orderID/status/:userID - PUT
+    5. Product
+        a. productId PARAM (parameterExtractor)⭐
+        b. /product/photo/:productId GET
+        c. /product/create/:userId POST
+        d. /product/:productId GET
+        e. /product/:productId/:userId DELETE
+        f. /product/:productId/:userId PUT
+        g. /products/categories GET
+    
+    6. Payment System
+
+Controllers:
+    1. auth
+        a. signup ✅
+        b. signin ✅
+        c. signout ✅
+        d. isAdmin ❗❗ ✅
+        e. isAuthenticated ❗❗ ✅
+        f. checker for token ❗❗ ✅
+    2. user
+        a. getUserById⭐ ✅
+        b. read ✅
+        c. update ✅
+        d. userPurchaseList ✅
+        e. pushOrderInPurchaseList ✅
+    3. catergory (its address whether winter collection or summer collection etc)
+        a. create
+        b. categoryById⭐
+        c. read
+        d. update
+        e. remove
+        f. getAll
+    4. order
+        a. orderById ❗❗
+        b. create
+        c. listOrder
+        d. updateOrderStaus
+        e. getOrderStatus
+    5. product
+        a. photo ❗❗
+        b. maintainStock ❗❗
+        c. create
+        d. getProductById ❗❗
+        e. read
+        f. remove
+        g. update
+        h. listCategories
+        i. list ❓
+
+
+//app.js
+const categoryRoutes = require("./routes/category.js");
+
+app.use("/api",categoryRoutes);
+
+###################################################################################################################################################
+Lesson 2 - get category from param
+😍till now we learnt how to extract single parameter from router, in this lesson we will learn Extarcting multiple parameters from the router
+
+//category.js from controller folder
+
+const Category = require("../models/category.js");
+
+exports.getCategoryById = (req, res, next, id) => {
+    Category.findById(id).exec((err, cate) => {
+        if(err){
+            return res.status(400).json({
+                error: "category not found in DB"
+            })
+        }
+        req.category = cate;
+        next();
+    });
+};
+
+
+//category.js from routes folder
+
+/*Remember whenever we create any router from scracth first main things u need to do are
+const express = require("express");
+const router = express.router;
+
+<CODE HERE>
+
+module.exports = router; */
+
+const express = require("express");
+const router = express.Router();
+
+//in this router category.js route we need methods which we export from cateogry controllers hence will add them
+const {getCategoryById} = require("../controllers/category.js");
+//in this router category.js route we even need methods which we export from auth and user controllers hence will add them too
+//from auth what all we may need - a user can be able to create categories if he signed in, if he logged in as well and only admin should be able to create categories so we need the below stuff mention inside {}
+const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth.js");
+//getUserById method i need from user hence will add them inside {}
+const {getUserById} = require("../controllers/user.js");
+
+/* 😍😍😍
+So anywhere if my proect see userID in the parameter, then its just go ahead and populate my profile field 
+(this feature is defined in the user.js file from router folder which inturn connects with getuserbyid function in user.js from 
+controller folder and create re.profile object which is actually a user detail object in json format and it will be added to my body itself http call) 
+😍😍😍*/
+router.param("userId", getUserById); 
+//similar to above we will create something for category too😀😎😀...
+router.param("categoryId", getCategoryById); 
+
+module.exports = router;
+
+
+###################################################################################################################################################
+Lesson 3 - creating category and saving it 
+
+Creating a category is simple just we have pass on a string which just we all have to save in the database
+in our porject the admin will create it.
+
+//category.js from controllers folder
+
+exports.createCategory = (req, res) => {
+    const category = new Category(req.body); //creating object category from Category model which imported from model folder
+    category.save((err, cate) => {
+        if(err){
+            return res.status(400).json({
+                error: "Not able to save category in DB"
+            });
+        }
+        res.json({cate});
+    });
+};
+
+//catergory.js from routes folder
+
+const {getCategoryById, createCategory} = require("../controllers/category.js");
+
+router.post( 
+    "/category/create/:userId", 
+    isSignedIn , 
+    isAuthenticated, 
+    isAdmin ,
+    createCategory
+);
+
+
+###################################################################################################################################################
+Lesson 4 - get all categories at once 
+
+//category.js from routes folder
+const {getCategoryById, createCategory, getCategory, getAllCategory} = require("../controllers/category.js");
+
+router.get( "/category/:categoryId", getCategory);
+router.get( "/categories", getAllCategory);
+
+
+//category.js from controller folder
+exports.getCategory = (req, res) =>{
+    //😀😀😀thanks to our middleware getCategoryById which is doing job for us where it will populate req.category and we are simply sending the response as below 
+    return res.json(req.category); 
+}
+
+exports.getAllCategory = (req, res)=> {
+    Category.find().exec((err, allCateItems) => {
+        if(err){
+            return res.status(400).json({
+                error: "No Categories found"
+            });
+        }
+        res.json(allCateItems);
+    });
+};
+
+###################################################################################################################################################
+Lesson 5 - update the collections
+
+//cateogry.js from controller folder
+exports.updateCategory = (req, res) => {
+    //creating variable category
+    const category = req.category; //🥰🥰🥰 req.category coming from middleware getCategoryById :-) which get fired when we pass parameter in the url and cateogry is just a variable (object here)
+    category.name = req.body.name; //🥰🥰🥰 here we are grabbing category name which is being sent from front end or from postman 
+
+    //🥰🥰🥰 since category indeed req.category is already an object of database i can directly fire save method on it i.e category.save()
+    category.save((err, updatedCategory) => {
+        if(err){
+            return res.status(400).json({
+                error: "Failed to udpate category"
+            });
+        }
+        //if no error then updation is done so will send that json response to front end
+        res.json(updatedCategory);
+    });
+};
+
+//category.hs from routes folder
+const {getCategoryById, createCategory, getCategory, getAllCategory, updateCategory} = require("../controllers/category.js");
+
+//HC - update routes
+router.put( 
+    "/category/:categoryId/:userId", 
+    isSignedIn , 
+    isAuthenticated, 
+    isAdmin ,
+    updateCategory
+);
+
+
+###################################################################################################################################################
+Lesson 6 - perform a delete operation
+
+//category.js from category folder
+//HC Suggetion 😘😘😘
+//😘😘😘 instead of removeCategory some ppl use delete... but pls try to not to use delete bcz delete is proprietory (means owned, KSowmyada etc) operation being performed in the mongo... hence try to use long name which tells us what we are doing here and also will be good
+exports.removeCategory = (req, res) => {
+        //creating variable category
+        const category = req.category;
+
+        //remove() operation given by mongoose
+        category.remove((err, deletedCategory) => {
+            if(err){
+                return res.status(400).json({
+                    error: "Failed to delete category"
+                });
+            }
+            res.json({
+                message:"Successfully deleted",
+                deletedCategoryis: deletedCategory  //HC gave assignment to show the deletedcategory too .. I did it 😍😘🥰
+            });
+        });
+};
+
+//category.js from controller folder
+const {getCategoryById, createCategory, getCategory, getAllCategory, updateCategory, removeCategory} = require("../controllers/category.js");
+
+//HC - delete routes
+router.delete( 
+    "/category/:categoryId/:userId", 
+    isSignedIn , 
+    isAuthenticated, 
+    isAdmin ,
+    removeCategory
+);
+
+
+
+###################################################################################################################################################
+Lesson 7 - testing all routes with postman
+
+saved all the CRUD operation in the Post man - pls do check out
+
+1. Sign in - post (venki - 1234 signin)
+http://localhost:7000/api/signin
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+body:
+{
+	"email":"venki9648@gmail.com",
+	"password":"1234"
+}
+response:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNWVkNWQwZDRiMWVlMjA1YTMxMjciLCJpYXQiOjE2MjE2OTg2OTJ9.ZH__yuX0AJ5_fPIUrDXdTFuQ-TZ9BwE7rYyfCbuqCX4",
+    "user": {
+        "_id": "609d5ed5d0d4b1ee205a3127",
+        "name": "Venki",
+        "email": "venki9648@gmail.com",
+        "role": 1
+    }
+}
+
+
+2. createCategory (creating summer category by Admin Venki)
+
+POST
+http://localhost:7000/api/category/create/:userID
+http://localhost:7000/api/category/create/609d5ed5d0d4b1ee205a3127
+
+here 
+:userID - can be get by creating the user (should be admin here)
+
+POST - http://localhost:7000/api/category/create/609d5ed5d0d4b1ee205a3127
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNWVkNWQwZDRiMWVlMjA1YTMxMjciLCJpYXQiOjE2MjE2OTg2OTJ9.ZH__yuX0AJ5_fPIUrDXdTFuQ-TZ9BwE7rYyfCbuqCX4","description":""}]
+body:
+{
+	"name":"summer"
+}
+response:
+{
+    "cate": {
+        "_id": "60a92b9673565b14fc71c4b2",
+        "name": "summer",
+        "createdAt": "2021-05-22T16:04:38.994Z",
+        "updatedAt": "2021-05-22T16:04:38.994Z",
+        "__v": 0
+    }
+}
+
+
+3. updateCategory (creating summer category by Admin Venki)
+PUT
+http://localhost:7000/api/category/:categoryID/:userID
+http://localhost:7000/api/category/60a92a2c73565b14fc71c4af/609d5ed5d0d4b1ee205a3127
+
+here 
+:categoryID - u can get this by creating a category
+:userID - can be get by creating the user (should be admin here)
+
+PUT - http://localhost:7000/api/category/60a92a2c73565b14fc71c4af/609d5ed5d0d4b1ee205a3127
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNWVkNWQwZDRiMWVlMjA1YTMxMjciLCJpYXQiOjE2MjE2OTg2OTJ9.ZH__yuX0AJ5_fPIUrDXdTFuQ-TZ9BwE7rYyfCbuqCX4","description":""}]
+body:
+{
+	"name":"Winter ts"
+}
+response:
+{
+    "_id": "60a92a2c73565b14fc71c4af",
+    "name": "Winter ts",
+    "createdAt": "2021-05-22T15:58:36.780Z",
+    "updatedAt": "2021-05-22T15:59:46.105Z",
+    "__v": 0
+}
+
+4. Delete Category : deleteCategory (creating <category name> category by Admin Venki)
+DELETE
+http://localhost:7000/api/category/:categoryID/:userID
+http://localhost:7000/api/category/60a9324ad60a2d6ae8c4a17c/609d5ed5d0d4b1ee205a3127
+
+here 
+:categoryID - u can get this by creating a category
+:userID - can be get by creating the user (should be admin here)
+
+DELETE: http://localhost:7000/api/category/60a9324ad60a2d6ae8c4a17c/609d5ed5d0d4b1ee205a3127
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNWVkNWQwZDRiMWVlMjA1YTMxMjciLCJpYXQiOjE2MjE2OTg2OTJ9.ZH__yuX0AJ5_fPIUrDXdTFuQ-TZ9BwE7rYyfCbuqCX4","description":""}]
+body:
+ not needed
+{
+    "message": "Successfully deleted",
+    "deletedCategoryis": {
+        "_id": "60a9324ad60a2d6ae8c4a17c",
+        "name": "Winter ts",
+        "createdAt": "2021-05-22T16:33:14.541Z",
+        "updatedAt": "2021-05-22T16:33:14.541Z",
+        "__v": 0
+    }
+}
+
+
+###################################################################################################################################################
+Lesson 8 - Section quiz
+
+4/5 correct = 80/100 marks
+check screenshots for Q and A 
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//************************************************🤩🤩🤩 Section-10 Adding T-shirt to our backend 🤩🤩🤩***************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+whenever u r designing any appication there is a concentory product on which the entire application is focused on.. ex: course in some webisets, tshirt in tshirt selling websites
+here we work on tshirt (main thing / center of stuff) of our project 
+we do CRUD operation here
+
+we will learn about difference between JSON and form data
+
+here we work on some custom middlewares - not all the user should be allowed to create the user so we will write custom middleware which should only allow specific users with certain role in our application should allowed to update or create the product
+
+###################################################################################################################################################
+Lesson - 1 : JSON vs FORM DATA
+
+So far we were using 🥰SON
+Now its time to use 🥰FORM data - We need this bcz our project may need to store binary file or multi part file (pdf docuements, mp3, mp4 videos, jpeg or png images)
+
+Node.js -> Forma Data : https://www.npmjs.com/search?q=form%20data
+
+Good modules to handle form data
+1. Multer: https://www.npmjs.com/package/multer (THIS ONE HITHESH COVERED IN HIS NODEJS COURSE SO HE WILL teach Formidabale this time)
+Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency.
+
+2. Formidable: https://www.npmjs.com/package/formidable
+A Node.js module for parsing form data, especially file uploads.
+
+3. BusyBoy: (its very code but understanding code is bit difficult and messy) https://www.npmjs.com/package/busboy
+A node.js module for parsing incoming HTML form data.
+
+
+😍😘🥰 In this course we will be using Formidable and loddash to handle form data 😍😘🥰
+
+😍😘🥰Formidable: https://www.npmjs.com/package/formidable
+A Node.js module for parsing form data, especially file uploads.
+
+😍😘🥰Loddash: https://github.com/lodash/lodash
+https://lodash.com/
+Why Lodash?
+Lodash makes JavaScript easier by taking the hassle out of working with arrays, numbers, objects, strings, etc.
+Lodash’s modular methods are great for:
+
+Iterating arrays, objects, & strings
+Manipulating & testing values
+Creating composite functions
+
+###################################################################################################################################################
+Lesson - 2: Get Product By ID
+
+/////////////////////////app.js
+//my routes
+const productRoutes = require("./routes/product.js");
+//My Routes
+app.use("/api",productRoutes);
+
+
+/////////////////////////prodcut.js from Routes folder
+const express = require("express");
+const router = express.Router();
+
+//we may need some controllers methods which we defined earlier... so lets require them here
+const {getproductById} = require("../controllers/product.js");
+const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth.js");
+const {getUserById} = require("../controllers/user.js");
+
+//H.T - All of params
+//now the next thing after requiring the needed controllers as above is "we need to get something from paramaters".. lets handle that part here (similar to the way we did in user.js and category.js)
+router.param("UserId", getUserById);
+router.param("productId", getproductById);
+
+//H.T - All of actual routes
+
+module.exports = router;
+
+
+/////////////////////////////////product.js Controllers folder
+const Product = require("../models/product");
+
+exports.getproductById = (req, res, next, id) => {
+    //this will populate all the product
+    /* Product.findById(id).exec( (err, prod) => {
+        if(err){
+            return res.status(400).json({
+                error: "Product not found"
+            })
+        }
+        req.product = prod;
+        next(); 
+    }); */
+
+    //I want to populate the products only based on category so chain the populate method.... (REMEMBER We can chain as many as DB method as we want like .sort() .popualate() etcc)
+    Product.findById(id)
+    .populate("category")
+    .exec( (err, prod) => {
+        if(err){
+            return res.status(400).json({
+                error: "Product not found"
+            })
+        }
+        req.product = prod;
+        next(); //DONT FORGET THIS otherwise our application will get in middleware and no error will be thrown and we will have no knoledge why my app not working
+    });
+};
+
+###################################################################################################################################################
+Lesson - 3 : Saving Photo in mango and tshirt assets
+Here we will learn how to upload t-shirt photos on our web database
+
+//////prodct.js from conroller folder
+
+const formidable = require("formidable");
+// Javascript concept used below:  _ this we use for variable to say as it is private stuff that if want to have variable but dont want to use that too much explicitly 
+const _ = require("lodash");  //Recomended syntax: https://lodash.com/ 
+//We need to access the path of file... so need to include file system (use default nodejs moduel fs)
+const fs = require("fs"); 
+
+/* what we are doing here by H.T - [Section 10 - lesson 3: saving photo in mongo and tshirt assets]
+simply first declare a form with formidable IncomingForm method then you simply parse the form.
+then it gives you (majorily gives 3 items) that is error, fields and file.
+handling fields is like just handling the text which will focus in the video [Section 10 - lesson 4 : add restriction to product]
+in this video Section 10 - lession 3, we are seeing how to handle file. its pretty simple (similarly we can handle mp3 audio and mp4 video almost all are same with minor difference)
+first we check the file size restriction then technially the 2 lines which saves the image in the database are 
+product.photo.data = fs.readFileSync(file.photo.path)
+product.photo.contentType = file.photo.contentType;
+*/
+exports.createProduct = (req, res) => {
+    // now we will be using formidable here. https://www.npmjs.com/package/formidable 
+    let form = new formidable.IncomingForm(); 
+    form.keepExtenstions = true; //we want to say whether the files are in pnj or jpeg format etc...
+
+    //we have to parse this form. this expect 3 paramaters req, incoming call backs 
+    form.parse(req, (err, fields, file) => {
+        if(err){
+            return res.status(400).json({
+                error:"probably problem with image"
+            });
+        }
+
+        //H.T - TODO: restrictions on field
+
+        //create the product object of model Product type and pass the fields here which given by formidable
+        let product = new Product(fields);
+
+        //H.T - Lets handle file (i.e photo) here 
+        //how to handle. first check the size of the file. 
+        //file.photo .. file coming from formidable's parse method above.. photo is field name of my product model (i.e from front end the use has to send photo)
+        if(file.photo){ 
+            //how to calucalte the size - lets take for 2MB photo it will be (1024*1024 )*2 = (104856)*2 = 2097152 ~ let me take bit more than that.. so lets take 3000000 which is bit near to 3MB
+            if(file.photo.size > 3000000){
+                return res.status(400).json({
+                    error:"File size is too big! try to upload file less than of size 3MB"
+                })
+            }
+            //so now my file have no error so inlude file to my database. 
+            //if u remember in poduct model.. we have data of type buffer and contentType as string for my photo field 
+            //so in the photo.data of a product (i.e product.photo.data) u need to mention the full path of the image file
+            product.photo.data = fs.readFileSync(file.photo.path)//file is given to us by formidable... look above in the parse method to know more
+            //we need to mention the content Type also here
+            product.photo.contentType = file.photo.contentType;
+        }
+
+        
+        //the above if block handled my photo now its ready to upload to database
+        //H.T: save to the db
+        product.save((error, prod) => {
+            if (err){
+                return res.status(400).json({
+                  error:"Saving thirt in db failed"
+                });
+            }
+            res.json(product)
+        })
+    });
+};
+
+
+###################################################################################################################################################
+Lesson - 4 : Add restriction on prodct fields
+
+//product.js from controller folder
+in the createProduct method
+
+
+        //H.T - Applying restrictions on the fields [Section 10 - lesson 4 : add restriction to product]. 😍🥰actually better way is to handle them in routes/product.js like we did in routes/auth.js... in case you can do your own then please go ahead and do granular level validation on fields 😊
+        //H.T - Destructure the fields
+        /*
+        actually all the property coming up here will be like fields.name, fields.price, etcc so if somthing is coming up like that 
+        and you dont want to call everysingle time fields.name fields.price then you can use Javascript ES6 destructuring concept like below
+        const {price} = fields; so this line onwards you can simply say price instead of fields.price 🥰
+        */
+        //the below are all property of product (like mentioned in Product model)
+        const {name, description, price, category, stock} = fields; 
+
+        if( !name || !description ||!price || !category || !price || !stock){
+            return res.status(400).json({
+                error:"Hey User, you missed some of the fields... Please include all fields"
+            });
+        }
+
+
+        //if there is no restrictions(erros) in the fields then create the product object of model Product type and pass the fields here which given by formidable
+        let product = new Product(fields);
+
+
+###################################################################################################################################################
+Lesson - 5 : Long Debugging at postman
+
+First SIgn in with admin and get the tocken n user id to pass it to next POST method
+1.
+POST: 
+http://localhost:7000/api/signin
+headers:
+[{"key":"Content-Type","value":"application/json","description":""}]
+Body: 
+{
+	"email":"venki9648@gmail.com",
+	"password":"1234"
+}
+Response:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNWVkNWQwZDRiMWVlMjA1YTMxMjciLCJpYXQiOjE2MjIwODYyNzd9.93fP0zQPnTEEGXyEzo1wd_0aNmb23b36YGINdCsUMRo",
+    "user": {
+        "_id": "609d5ed5d0d4b1ee205a3127",
+        "name": "Venki",
+        "email": "venki9648@gmail.com",
+        "role": 1
+    }
+}
+
+
+2.
+POST:
+http://localhost:7000/api/product/create/609d5ed5d0d4b1ee205a3127
+Headers:
+dont select the application/json bcz here we are sending body in form-data format: [{"key":"Content-Type","value":"application/json","description":""}]
+[{"key":"Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDlkNWVkNWQwZDRiMWVlMjA1YTMxMjciLCJpYXQiOjE2MjIwODYyNzd9.93fP0zQPnTEEGXyEzo1wd_0aNmb23b36YGINdCsUMRo","description":""}]
+Body:
+[{"key":"name","value":"I write code Ts","description":""},
+{"key":"description","value":"A classic Tshirt","description":""},
+{"key":"price","value":"10","description":""},
+{"key":"category","value":"60a92b9673565b14fc71c4b2","description":""},
+{"key":"stock","value":"27","description":""},
+{"key":"photo","value":{"0":{}},"description":""}]  //for photo in postman you need to select type as file then choose file from local storage
+Response:
+{
+    "photo": {
+        "data": {
+            "type": "Buffer",
+            "data": [137, 80, 78......172577 values more]
+            }
+    },
+    "sold": 0,
+    "_id": "60af1467facc686524c65264",
+    "name": "I write code Ts",
+    "description": "A classic Tshirt",
+    "price": 10,
+    "category": "60a92b9673565b14fc71c4b2",
+    "stock": 27,
+    "createdAt": "2021-05-27T03:39:19.966Z",
+    "updatedAt": "2021-05-27T03:39:19.966Z",
+    "__v": 0
+}
+
+
+
+ONCE AGIAN ALL THE REQUIRED FILES OF SECTION-10 (bcz i have fixed many mistakes which i have done)
+//////app.js
+const productRoutes = require("./routes/product.js");
+.
+.
+.
+app.use("/api",productRoutes);
+
+
+///////product.js from models folder
+const mongoose = require("mongoose");
+//I want this category property to be linied to previous schema that i have created so i have to use the concept of mongoose objectId
+//https://mongoosejs.com/docs/api.html#mongoose_Mongoose-ObjectId
+const {ObjectId} = mongoose.Schema; //😭😭😭Initially I had put ObjectID. ERROR Will be : TypeError: Invalid value for schema path `category.type`, got value "undefined"
+
+const productSchema = new mongoose.Schema({
+    name:{
+        type: String,
+        trim: true,
+        required: true,
+        maxlength: 32
+    },
+    description:{
+        type: String,
+        trim: true,
+        required: true,
+        maxlength: 2000
+    },
+    price:{
+        type: Number,
+        trim: true,
+        required: true,
+        maxlength: 32
+    },
+    //I want this category property to be linied to previous schema that i have created so i have to use the concept of mongoose objectId
+    //https://mongoosejs.com/docs/api.html#mongoose_Mongoose-ObjectId
+    category:{
+        type: ObjectId, //this is kind of venki defined type at line no 2
+        ref: "Category", //we have to tell from which schema this ObjectId is reffered from i.e exact name of exported schema name. here it s "Category"
+        required: true
+    },
+    //this stock property i can use to keep the number of that perticular tshirt unit i have stock
+    stock:{
+        type:Number
+    },
+    //this stock property i can use to keep the number of that perticular tshirt unit i have sold
+    sold:{
+        type:Number,
+        default: 0 //default 0. bcz whenever i create a product obviosuly i would have not sold anything yet hence its 0
+    },
+    //usually we should not put photos into project DB bcz its bit heavier. other ways are like keeping the link and downloading when its requried like in Amazon or facebook
+    //if i was using FIREBASE then i can create folder and keep photos and just pulled out reference
+    //but now in this project lets just keep it in our project DB only
+    photo:{
+        data: Buffer,
+        contentType: String
+    }
+},
+{ timestamps: true}
+);
+
+module.exports = mongoose.model("Product", productSchema);
+
+
+
+////product.js from routes folder
+const express = require("express");
+const router = express.Router();
+
+//we may need some controllers methods which we defined earlier... so lets require them here
+const {getproductById, createProduct} = require("../controllers/product.js");
+const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth.js");
+const {getUserById} = require("../controllers/user.js");
+
+//H.T - All of params
+//now the next thing after requiring the needed controllers as above is "we need to get something from paramaters".. lets handle that part here (similar to the way we did in user.js and category.js)
+//THANKS TO method getUserById, bcz it will gonna populate req.profile automatically wherver i use :userId parameter in the file
+router.param("userId", getUserById); //😭😭😭Initially I wrote "UserId" and below at actual routes wrote as :userID hence my user didnt get authenticated. got ERROR:Access Denied for you (from auth.js)
+router.param("productId", getproductById);
+
+//H.T - All of actual routes
+router.post("/product/create/:userId", isSignedIn, isAuthenticated, isAdmin, createProduct); //😭😭😭Always isSignedIn should be first bcz req.profile, req.authVarAnyName all are will get values only if isSignedIn executed first else will get ERROR: Undefined like "TypeError: Cannot read property '_id' of undefined" 
+
+module.exports = router;
+
+
+
+/////product.js from controller folder
+const Product = require("../models/product");
+const formidable = require("formidable");
+// Javascript concept used below:  _ this we use for variable to say as it is private stuff that if want to have variable but dont want to use that too much explicitly 
+const _ = require("lodash");  //Recomended syntax: https://lodash.com/ 
+//We need to access the path of file... so need to include file system (use default nodejs moduel fs)
+const fs = require("fs"); 
+
+
+exports.getproductById = (req, res, next, id) => {
+    //this will populate all the product
+    /* Product.findById(id).exec( (err, prod) => {
+        if(err){
+            return res.status(400).json({
+                error: "Product not found"
+            })
+        }
+        req.product = prod;
+        next(); 
+    }); */
+
+    //I want to populate the products only based on category so chain the populate method.... (REMEMBER We can chain as many as DB method as we want like .sort() .popualate() etcc)
+    Product.findById(id)
+    .populate("category")
+    .exec( (err, prod) => {
+        if(err){
+            return res.status(400).json({
+                error: "Product not found"
+            })
+        }
+        req.product = prod;
+        next(); //DONT FORGET THIS otherwise our application will get in middleware and no error will be thrown and we will have no knoledge why my app not working
+    });
+};
+
+
+/* what we are doing here by H.T - [Section 10 - lesson 3: saving photo in mongo and tshirt assets]
+simply first declare a form with formidable IncomingForm method then you simply parse the form.
+then it gives you (majorily gives 3 items) that is error, fields and file.
+handling fields is like just handling the text which will focus in the video [Section 10 - lesson 4 : add restriction to product]
+in this video Section 10 - lession 3, we are seeing how to handle file. its pretty simple (similarly we can handle mp3 audio and mp4 video almost all are same with minor difference)
+first we check the file size restriction then technially the 2 lines which saves the image in the database are 
+product.photo.data = fs.readFileSync(file.photo.path)
+product.photo.contentType = file.photo.contentType;
+*/
+exports.createProduct = (req, res) => {
+    // now we will be using formidable here. https://www.npmjs.com/package/formidable 
+    let form = new formidable.IncomingForm(); 
+    form.keepExtenstions = true; //we want to say whether the files are in pnj or jpeg format etc...
+
+    //we have to parse this form. this expect 3 paramaters req, incoming call backs 
+    form.parse(req, (err, fields, file) => {
+        if(err){
+            return res.status(400).json({
+                error:"probably problem with image"
+            });
+        }
+
+        //H.T - Applying restrictions on the fields [Section 10 - lesson 4 : add restriction to product]. 😍🥰actually better way is to handle them in routes/product.js like we did in routes/auth.js... in case you can do your own then please go ahead and do granular level validation on fields 😊
+        //H.T - Destructure the fields
+        /*
+        actually all the property coming up here will be like fields.name, fields.price, etcc so if somthing is coming up like that 
+        and you dont want to call everysingle time fields.name fields.price then you can use Javascript ES6 destructuring concept like below
+        const {price} = fields; so this line onwards you can simply say price instead of fields.price 🥰
+        */
+        //the below are all property of product (like mentioned in Product model)
+        const {name, description, price, category, stock} = fields; 
+
+        if( !name || !description ||!price || !category || !price || !stock){
+            return res.status(400).json({
+                error:"Hey User, you missed some of the fields... Please include all fields"
+            });
+        }
+
+
+        //if there is no restrictions(erros) in the fields then create the product object of model Product type and pass the fields here which given by formidable
+        let product = new Product(fields);
+
+        //H.T - Lets handle file (i.e photo) here 
+        //how to handle. first check the size of the file. 
+        //file.photo .. file coming from formidable's parse method above.. photo is field name of my product model (i.e from front end the use has to send photo)
+        if(file.photo){ 
+            //how to calucalte the size - lets take for 2MB photo it will be (1024*1024 )*2 = (104856)*2 = 2097152 ~ let me take bit more than that.. so lets take 3000000 which is bit near to 3MB
+            if(file.photo.size > 3000000){
+                return res.status(400).json({
+                    error:"File size is too big! try to upload file less than of size 3MB"
+                })
+            }
+            //so now my file have no error so inlude file to my database. 
+            //if u remember in poduct model.. we have data of type buffer and contentType as string for my photo field 
+            //so in the photo.data of a product (i.e product.photo.data) u need to mention the full path of the image file
+            product.photo.data = fs.readFileSync(file.photo.path)//file is given to us by formidable... look above in the parse method to know more
+            //we need to mention the content Type also here
+            product.photo.contentType = file.photo.contentType;
+        }
+       // console.log(product); //wrote this when we got error while debugging the issue of caterogy not getting saved in db
+
+        
+        //the above if block handled my photo now its ready to upload to database
+        //H.T: save to the db
+        product.save((err, prod) => {
+            if (err){
+                return res.status(400).json({
+                  /*😭😭😭got this error when I just passed category directly ([{"key":"category","value":"summer","description":""}]) 
+                  with name from postman instead of referncing required category id (which u can get it from DB.. check in Robo3T and 
+                  copy the required category ID and pass it)*/
+                  error:"Saving thirt in db failed" 
+                });
+            }
+           //res.json(product); //too big to print in postman so lets just print some message
+           res.json({
+               success_msg: "product added to database"
+           });
+        })
+    });
+};
+
+
+
+//////auth.js from controller folder
+//create the file in controller folder with the same name as file created in routes folder
+//in this file we can directly exports the individual function (as many as we want) using exports.functionName
+
+const User = require("../models/user"); //Importing the user.js model mongoose schema
+//const { check, validationResult } = require('express-validator'); //here we dont need check, just we need expressvalidator
+const { validationResult } = require('express-validator'); 
+//moduule to create token and put that into user browser to authenticate user at any given time
+var jwt = require('jsonwebtoken'); //https://www.npmjs.com/package/jsonwebtoken 
+var expressJwt = require('express-jwt'); //https://www.npmjs.com/package/express-jwt
+
+
+exports.signup = (req, res) => {
+
+    //documentation about error validation https://express-validator.github.io/docs/index.html we need to send the response in good format
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty() ){
+        return res.status(422).json({
+            //errors is an array of objects as u can see in the doc h ttps://express-validator.github.io/docs/index.html
+            /*
+            {
+                "errors": [
+                     {
+                        "location": "body",
+                        "msg": "Invalid value",
+                        "param": "username"
+                    }
+                ]
+            }
+            */
+            //we need to convert it to array (use the "array" method which is method in Javascript which convert everthing to an array)
+           //"errors.array()" now access first element with "[0]" and now its object so i can take out anything in it like .msg or .param etc
+            error: errors.array()[0].msg  
+        });
+    }
+//OUTPUT
+//when i send user data with email having no format i got the response in postman as
+//{
+  //  "error": "valid email is required"
+//}
+
+    const user = new User(req.body); //user is object of class User (which is a mongoose schema) and the data is passed by body paramaeter which send by client / browser
+    //since user is created by Class User which further created by mongoose we can access All DATABASE methods which MONGOOSE provide to us
+    //you can use objectofmongooseschema.save (here user.save) or populate etc etc .... methods
+    //user.save(); //it will just save the data to database thats good but i want to send some response to client hence use callbacks
+    //and any method of mongodb or firebase gives two parameters back to us those are "error" and the "same object which we tried to save to database"
+    user.save( (err, user) => { 
+        if(err){ 
+            //console.log(err); to display the complete error stack in the console
+			//res.send(err); to display the complete error stack to the clinet /broswer / postman 
+            return res.status(400).json({  //if error then send 400 status code and clear info to front end user in the Json format is good too
+                err: "NOT able to save user in DB"
+            })
+        }
+        else{
+             // res.json(user); //if no error send the complete object i.e user here, or we can selectively send required field as shown below
+            res.json({
+                name:user.name,
+                lastname:user.lastname,
+                email:user.email, //email is the exact field name of monogdb response object / u can say field name of user database table
+                id:user._id //REMEMBER the field name is _id not just id
+            })
+        }
+ 
+    })
+};
+
+exports.signin = (req, res) => {
+    const errors = validationResult(req);
+    //previos controllers we were just passing all the info coming up from user into body to the database bcz all the data was needed
+    //now in here - signin, we are just curiuos about 2 info so from req.body we jsut extract email and password 
+    //ES6 - latest feature of javascript - OBJECT DESTRUCTURING 🥰 where we can mention only the required field from the array object
+    const {email, password} = req.body; //So here we extracted email and password which we can use directly in the code
+
+    //VALIDATION PART
+    if(!errors.isEmpty() ){
+        return res.status(422).json({
+         error: errors.array()[0].msg  
+        });
+    }
+
+
+    //findone matches very first match from the database
+    //Syntax: module.mogoosemethod({condition/property on which this findone need to search}, (callback parameters will be 'error' and 'object itslef') => { callback method})
+    User.findOne({email}, (err, user) =>{
+        // if the email does not exist then set the status code 400 and send proper customized error response in json format (instead of default error message which is good practice)
+        if(err || !user){
+            return res.status(400).json({ 
+                error:"User email does not exists"
+            })
+        }
+
+        //if email exist then check for match of the password if it not matches then get inside the if block
+        //for this will use AUTHENTICATE Method in User module... will make use of that method here
+        //while using this method we authenticate based on plainpassword which user enters which we need to pass here as parameter
+        if(!user.authenticate(password)){
+            res.status(401).json({  //initially i had forgot to put return here. return required bcz i dont want further execution of things over here
+                error:"Email and password do not match"
+            })
+        }
+
+        //H.C: CREATE TOKEN
+        //validation/check is done, now i have i have to signin 😍 the user i.e create token and put that toeken into cookies
+        //i will use jwt method signin, and i can create sign with any key value pair, so i use _id which given to me by user method 
+        //const token = jwt.sign({_id: user._id}, "shhhh") // or use any string u like... better to use ir via .env file
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET);
+        //H.C: PUT TOKEN INTO USER COOKIE
+        //🥵 Got error "Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client" and app crashed when i sent the wrong pwd... need to fix it
+        //🥵 https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client
+        res.cookie("token", token, { expire: new Date() + 9999 }); 
+
+
+        //send response to front end
+        //lets use DECONSTRUCT feature on user object and send only required stuff to front end
+        const {_id, name, email, role} = user; 
+        return res.json({token, user: {_id, name, email, role} });
+    });
+};
+
+
+exports.signout = (req, res) => {
+    //clear the cookie for the token which is the variable you passed to cookie method in the signin controller 
+    res.clearCookie("token");
+    res.json({
+         message: "user signout successfully"
+     })
+ };
+
+
+//H.C: Protected routes
+//good practice = for route protection methods try to prepend "is" like isSignedIn, isAdmin etcc
+exports.isSignedIn = expressJwt({   //pass object to expressJwt which we required/imported above in this file.. so to pass object use always {}
+    secret: process.env.SECRET,
+    userProperty: "authVarAnyName" //😊VIP- here the middleware just add property inside the reqest which is here authVarAnyName which we can make use in other function, at routes functions etcc...
+}); //remember in custom middlewares we always use next(), the reason why we not write next() here even isSignedIn is middleware is bcs the 'expressJwt' method already got next() covered up for us.. so we are not writing next() here
+
+
+ //H.C: Custom middlewares
+exports.isAuthenticated = (req, res, next) => {
+    //req means data from frontend or userend... so through the frontedn we are goint to setup property called profile.. u can name anything u like and this profile only going to set if the user logged in.. like if you have email, id or role then only this propoerty will set
+    //SO we are creating variable checker... where req.profile will set up fron front end, authVarAnyName propoerty set from above SignedIn method, and then we chech the profile id which is set from the front end is equal to authVarAnyName id which set by middleware..
+    let checker = req.profile && req.authVarAnyName && req.profile._id == req.authVarAnyName._id; // use == to commpare the values, use === to compare the object itself
+    console.log("req.profile is : "); console.log(req.profile);
+    console.log("req.authVarAnyName is : "); console.log(req.authVarAnyName);
+    console.log("req.profile._id is : "); console.log(req.profile._id);
+    console.log("req.authVarAnyName._id is: "); console.log(req.authVarAnyName._id);
+    //if all of the above are true that means the user can autheticated and change things in his own account. 😍😍😍
+    if(!checker){
+        return res.status(403).json({
+            error:"Access Denied for you as you are not authenticated"
+        });
+    }
+    next();
+};
+
+exports.isAdmin = (req, res, next) => {
+    //how to check wherher the user is admin... its simple using our admin model property which we created
+    //again remember the profile is gonna set from front end
+    if(req.profile.role === 0){
+        return res.status(403).json({
+            error: "You are not ADMIN, access to this page/route/feature denied for you"
+        })
+    }
+    next();
+};
+
+
+###################################################################################################################################################
+Lesson - 6 : Get compressed images assets here
+
+As the image size is big (almost 2MB)... its taking bit long time to save into database and getting response back in postman
+so in this lesson Hitesh choudary gave us compressed images folder (each image of aroung 100KB)... now its fine
+
+😀😎😀 
+But in Realtime project we just give path of the video or images or files so that at runtime app will fetch from the location
+this is common approcah of firebase too
+😀😎😀 
+
+###################################################################################################################################################
+Lesson - 7 : Some optimization for binary data
+
+////product.js from routes folder
+const {getproductById, createProduct, getProduct, image} = require("../controllers/product.js");
+
+//lets create a Temporary router to use the middleware method image. (SO AS SOON AS I see somthing like "/product/image/:productId" in the URL then this route will trigger hence the middleware "image" )
+router.get("/product/image/:productId", image);
+
+
+////product.js from controller folder
+//H.C : middleware
+//middleware to load the photo
+exports.image = (req, res, next) => {
+    if(req.product.photo.data) {  //let's do quick check so things dont crash directly... if there is data then only will do proceed
+        res.set("Content-Type", req.product.photo.contentType) //😍we are setting the key-value here. key is : Content-Type, value is: will set it from product.photo (i.e database value)
+        return res.send(req.product.photo.data); //Content-Type is set, now only thing i have to do it send the photo data
+    }
+    next();
+}
+
+###################################################################################################################################################
+Lesson - 8 : Update and delete of Tshirts
+
+////// product.js from routers folder
+const {getproductById, createProduct, getProduct, image, updateProduct, deleteProduct} = require("../controllers/product.js");
+
+//H.C - update routes
+router.put("/product/:productId/:userID", isSignedIn, isAuthenticated, isAdmin, updateProduct);
+
+//H.C - delete routes
+router.delete("/product/:productId/:userID", isSignedIn, isAuthenticated, isAdmin, deleteProduct);
+
+
+/////product.js from controllers folder
+//H.C : Update controllers //copy code from createProduct method as most of the code is same and just do edit/add/delete some lines of that code
+exports.updateProduct = (req, res) => {
+    let form = new formidable.IncomingForm(); 
+    form.keepExtenstions = true; 
+
+    form.parse(req, (err, fields, file) => {
+        if(err){
+            return res.status(400).json({
+                error:"probably problem with image"
+            });
+        }
+
+        //H.C : Updation code
+        //here we are assining existing product in the db to variable product so replace "let product = new Product(fields)" to "let product = req.product"
+        let product = req.product; //🥰😍😘In case you wonder where this req.product coming from, REMEMBER in the "put route" we are getting ":produtId", as soon as the program sees this the "prams gonna fire up/execute" so that we get req.product data 
+        //now we need to update this using 🥰😍😘"loadash"🥰😍😘 which helps us easily in working with these objects, creating new objects, arrays etc stuff
+        product = _.extend(product, fields); //🥰😍😘extend method of lodash🥰😍😘 takes the exisiting values in the object we are having and it extend that value means all the updation functionality involved there. and it takes 2 parmeter that is the object it need to look (here it is product), and what needs to update (here it is fields which is coming from foridable)... So lodash updates the fields which coming from formidable to object product
+
+        if(file.photo){ 
+            if(file.photo.size > 3000000){
+                return res.status(400).json({
+                    error:"File size is too big! try to upload file less than of size 3MB"
+                })
+            }
+             product.photo.data = fs.readFileSync(file.photo.path)
+            product.photo.contentType = file.photo.contentType;
+        }
+        //console.log(product);
+
+        //H.C - Save to DB
+        product.save((err, prod) => {
+            if (err){
+                return res.status(400).json({
+                  error:"updation of product failed" 
+                });
+            }
+           res.json(product); //too big to print in postman so lets just print some message
+           /* res.json({
+               success_msg: "product added to database"
+           }); */
+        })
+    });
+};
+
+//H.C: delete controllers
+exports.deleteProduct = (req, res) => {
+    let product = req.product; //this is coming from middleware
+    product.remove((err, deletedProduct) => {
+        if(err){
+            return res.status(400).json({
+                error: "Failed to delete the procduct"
+            });
+        }
+        deletedProduct.photo = undefined; //to not to load binary data of photo which is heavy and take time
+        res.json({
+            message:"Deletion was a sucess",
+            message_2: "and the deleted product json response is",
+            deletedProduct
+        });
+    });
+}
+
+
+###################################################################################################################################################
+Lesson - 9 : Get All products
+
+////product.js from routes folder
+const {getproductById, createProduct, getProduct, image, updateProduct, deleteProduct, getAllProducts} = require("../controllers/product.js");
+
+//H.C - Listing routes
+//I dont want any auth middlware here to authenticate user or to check whether user sighned in or admin etcc.. bcz any client/user who opens our app should see the listing product
+router.get("/products", getAllProducts);
+
+
+////product.js from controllers folder
+//H.C : product listing controller
+exports.getAllProducts = (req, res) => {
+    //🥰😍😘taking limit value from user : if there is a query from front end (i.e in url ? will be there na.. with value that one) and if it has propoerty of limit then use that value of set default limit size as 8 
+    //🥰😍😘 whenever we are taking any parameter from user, all the major launagues like java, js handle that as String value, so convert into Integer to use that variable in here
+    let limit = req.query.limit ? parseInt(req.query.limit) : 8 ; 
+
+    //🥰😍😘same thing as limit do the default value setting for sortBy if user not send it
+    //🥰😍😘 no need to convert it into integer, bcz we need it in string format only
+    //🥰😍😘 we can sort based on any field of product like creation date, products name etc.. the basic and most using one is based on id (and in database it saved as _id so use _id and not id)
+    let sortBy = req.query.sortBy ? req.query.sortBy : "_id" ;
+
+    //Product is the varibale of my model product shcema
+    Product.find()
+        .select("-photo")
+        .populate("category")
+        .sort([[sortBy, "asc"]])
+        .limit(limit)
+        .exec((err, manyProdcuts) => {
+            if(err){
+                return res.status(400).json({
+                    error:"No Product Found"
+                })
+            }
+            res.json(manyProdcuts);
+        })
+};
+
+###################################################################################################################################################
+Lesson - 10 : Update your inventory
+
+🤩🤩🤩 In this section we are gonna talk about some of the operation as we have to perform as middleware 
+as soon as somebody makes a purchase and the purchase is successfull we have to update couple of things that we mentioned in the "product model"
+mainly "stocks" and "sold" in the product model, they are indirectly proportional
+ie. increae in sold = decrease in stock , initially sold of any product will be 0 and as soon as it updates to 1 then obviosuly the stock will reduce by 1
+
+🤩🤩🤩 Theory : we will use bulkwrite which is mongoose one of the famous method like find, findOne etcc...
+https://mongoosejs.com/docs/api.html#model_Model.bulkWrite
+or
+https://mongodb.github.io/node-mongodb-native/3.0/api/Collection.html#bulkWrite
+
+
+////product.js from controller folder
+
+//updatestock or updateinventroy whichever is suits you, use that name here
+exports.updateStock = (req, res, next) => {
+    
+    //we will have oder and it will have many products which we will loop through in, and below prod is every single object of that loop  
+    let myOperations = req.body.order.products.map(prod => {
+        return {
+            //for every single product i want to fire up updateOne method that we saw in the mongoose bulkwrite documentation https://mongoosejs.com/docs/api.html#model_Model.bulkWrite
+            //and the operation which i want to perform will be inside {}
+            updateOne: {
+                filter: {_id: product_id},
+                update: {$inc: {stock: -prod.count, sold: +prod.count, }} //this .count info will come from frontend bcz user may purchase 1 stock or 3 stock of same product
+            }
+        }
+    });
+
+    //once above things done we can use bulkwrite method and it takes 3 parameters, 1st one all the operation that we want to perfom, and 2nd we have to pass the object, 3rd callback
+    product.bulkWrite(myOperations, {}, (err, resultproducts) => {
+        if (err){
+            return res.status(400).json({
+                error:"Bulk Operation Failed"
+            })
+        }
+        //if no error then next thing is i have to pass the controller to the next middleware so just use next()
+        next();
+    });
+};
+
+
+
+###################################################################################################################################################
+Lesson - 11 : This is alternative to get all distinct categories
+
+////product.js from routes folder
+const {getproductById, createProduct, getProduct, image, updateProduct, deleteProduct, getAllProducts, getAllUniqueCategories} = require("../controllers/product.js");
+
+/* In admin panel user will be able to create product, but obviously he needs to create categories as well so he need to select the categories. 
+now i wont allow him to write the category bcz it might create mistakes there, rather i would like to populate these categories in advance and
+in the front end i will just display these categories. 
+so i need  a method using which i can grab all the distinct categories so i can see all of them
+This is useful to display all the distinct categories to user i.e admin bcz only admin can create categories and products when he is creating categories */
+router.get("/products/categories", getAllUniqueCategories);
+
+////product.js from controllers folder
+
+//This is useful to display all the distinct categories to admin when he is creating categories
+exports.getAllUniqueCategories = (req, res) => {
+    //mongoose's distinct() method will give me all the unique value
+    // parameters - 1st Field from which u need distinct values, 2nd options (here i dont have any such so empy {}), 3rd callback
+    Product.distinct("categories", {}, (err, categories) => {
+        if(err){
+            return res.status(400).json({
+                error:"No Category found"
+            });
+        }
+        res.json(categories);
+    });
+};
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//******************************************************🤩🤩🤩 Section-11: Placing the Order 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+Will talk about storing orders in the database
+and will work on stuff related to orders
+
+🤩🤩🤩
+WE USE mongoose's populate() method lot of times here...
+so pls learn by going through documentation and try to understand first
+🤩🤩🤩
+
+###################################################################################################################################################
+Lesson - 1 : Getting Started with Order
+
+@@@@@@@@@@@@ app.js
+const orderRoutes = require("./routes/order.js");
+.
+.
+app.use("/api",orderRoutes);
+
+
+@@@@@@@@@@@ order.js from routers
+
+let express = require("express");
+let router = express.Router();
+
+const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth.js");
+//along with getUserByID middleware, I need pushOrderInPurchaseList middleware too to push the order into the array of usermodel 
+const {getUserById, pushOrderInPurchaseList} = require("../controllers/user.js");
+//we need updatestock from product too to update stock as and when the order is placed so lets requrie updateStcok middleware
+const {updateStock} = require("../controllers/product.js");
+const {} = require("../Controllers/order.js");
+
+module.exports = router;
+
+
+###################################################################################################################################################
+Lesson - 2 : Get Order By ID
+
+@@@@@@@@@@@ order.js from router
+let express = require("express");
+let router = express.Router();
+
+const {isSignedIn, isAuthenticated, isAdmin} = require("../controllers/auth.js");
+//along with getUserByID middleware, I need pushOrderInPurchaseList middleware too to push the order into the array of usermodel 
+const {getUserById, pushOrderInPurchaseList} = require("../controllers/user.js");
+//we need updatestock from product too to update stock as and when the order is placed so lets requrie updateStcok middleware
+const {updateStock} = require("../controllers/product.js");
+const {getOrderById} = require("../Controllers/order.js");
+
+
+//H.C : Params (🥰😍😘this is also kind of route but it's just a parameter extractor for us... but very powerful and makes our code reusable and less writable by using it all the time)
+router.param("userId", getUserById); //as soon as its see something like userId in the URL it's gonna run our method getUserById so indeed it will populate (or we will get) "req.profile" assigned for the loggedIn user data and which will be ready to use for us
+router.param("orderId", getOrderById); //as soon as its see something like orderId in the URL it's gonna run our method getOrderById so indeed it will populate (or we will get) "" assigned for the order id mentioned in the URL and which will be ready to use for us
+
+
+//H.C : Actual routes
+
+//H.C : Create
+
+//H.C : read 
+
+module.exports = router;
+
+
+@@@@@@@@@@@ order.js from Controllers
+
+/* In controller we usually import the models first, and usually we import/require like below
+//product.js from controller
+const Product = require("../models/product");
+this is becuase in that respective model file we are exporting just one thing/ one model like below
+//product.js Model from models
+module.exports = mongoose.model("Product", productSchema); */
+
+//but here for order.js controller we need to do differently
+// bcz in order.js model we are exporting two models those are "Oder model" and "Productcart model"
+
+const {Order, ProductCart} = require("../models/order.js");
+
+exports.getOrderById = (req, res, next) => {
+    /* REGULAR STUFF WHAT WE DO IS
+    //apply mongoose query method findById() to Order model and inject our id there then chain it to exec() method
+    Order.findById(id).exec((err, order) => {
+        //if error then we will set the http response status to 400 and send the error message in JSON format
+        if(err){
+            return res.status(400).json({
+                error:"No Order found in the DB"
+            })
+        }
+        //if no error then we simply go and populate the object called "order" in the request
+        req.order = order; 
+        //once all these done then hand over to next()
+        next();
+    }); 
+    */
+
+    //BUT IN ORDER WE DO NEED MUCH MORE THINGS like PRODUCT DETAILS bcz an ORDER is COMPRISED of variety of products SO We need to use populate here to pupulat the name and the price of the individual product
+     //apply mongoose query method findById() to Order model and inject our id there then chain it to exec() method
+     Order.findById(id)
+     .populate("Products.product", "name price") //we are picking the name and price fields of each one product. 🥰😍😘 Make sure you dont use , to seperate the required fields in the populare method ie "name price" is correct and "name, price" is wrong
+     .exec((err, order) => {
+        //if error then we will set the http response status to 400 and send the error message in JSON format
+        if(err){
+            return res.status(400).json(
+                {
+                error:"No Order found in the DB"
+            })
+        }
+        //if no error then we simply go and populate the object called "order" in the request
+        req.order = order; 
+        //once all these done then hand over to next()
+        next();
+    }); 
+
+}
+
+
+###################################################################################################################################################
+Lesson - 3 : Create an Order
+We will create a route to create an order
+
+@@@@@@@@@@ order.js from routes
+//H.C : Create
+/*11-3
+🥰🎈🥰How to write route generally - first /api will be there from app.js then,write /<respective route> i.e order here, then /pupose of the route like create or update or delete, then /:<required param middleware> from other controllers which's data we use like here /:userId bcz we need req.profile
+once the below path request comes from the url then i need to use some middleware then at last my callback function i.e createOrder
+i need to check whether the user Signed in then whether he authenticated then i need to push the order in the purchase list then i need to update my stock then i fireup my method i.e createOrder
+ */
+router.post("/order/create/:userId", isSignedIn, isAuthenticated, pushOrderInPurchaseList, updateStock, createOrder);
+
+
+@@@@@@@@@@ order.js from controllers
+//11-3
+exports.createOrder = (req, res) => {
+    //req.body.Order.user this is the method in the Order model that i have defined and that is based on the Users model so i can simply assign using req.profile, and this profile is populated by my params which is getUserById
+    req.body.Order.user = req.profile;
+    const order = new Order(req.body.order)
+
+    order.save((err, order) => {
+        if(err){
+            return res.status(400).json({
+                error:"Failed to save your oder in DB"
+            })
+        }
+        res.json(order);
+    });
+};
+
+###################################################################################################################################################
+Lesson - 4 : Why ENUMS are important
+
+ENUMS
+Enums are looks almost like an array but they are very restricitve choice and only from that choice you can use certain things.
+Example Usecase:
+✈🛫🛬
+    Lets say you are travelling in an aeroplane and in the airplace always you asked about 3 kinds of seats Window, middle or aisle seat. Now imagine if a user who
+is alloting you a seat just mentioned as corner seat instead of aisle seat. this strange thing which is a small choas in the naming convenstion can 
+create a nightmare for the staff inside the plane to show that seat to user.
+    So as a programmer you need to restrict the usecase of what word user is using while doing booking or recieving an order in such places we use ENUMS
+    Incase of aeroplane there is just window, corner, or aisle seat and there is no such term called corner seat.
+
+🥰🎈😘
+    Similar to that when we are processing the order of the user we want to restrict the order phase that the order is in a given moment. like whether the order is in
+recieved state?
+ordering state?
+processing state?
+delevered state? or 
+cancelled state?
+and these states we need to retrict using ENUMS
+    So for this we need to update our order schema.
+
+@@@@@@@ order.js from modules (only updated code)
+        status: {
+            type: String,
+            default: "Recieved", //default status of the order
+            enum: ["Cancelled", "Delivered", "Shipped", "Processing", "Recieved"]
+        },
+         //till here added during the 12-4 Section-12, lesson-4
+
+
+@@@@@@@@ order.js from routes
+//H.C : read 
+//11-4
+//Get all orders - only admin who is signed in and authenticated should be able to see all the orders hence use those auth middlewares
+router.get("/order/all/:userId", isSignedIn, isAuthenticated, isAdmin, getAllOrders);
+
+@@@@@@@@@ order.js from controllers
+//11-4
+exports.getAllOrders = (req, res) => {
+    Order.find()
+    .populate("user", "_id name") // we want to poupulate _id and name from user model... u can add much more if u need
+    .exec((err, allorders) => {
+        if(err){
+            return res.status(400).json({
+                error:"No orders found in the DB"
+            });
+        }
+        res.json(order);
+    });
+};
+
+
+
+###################################################################################################################################################
+Lesson - 5 : update the order status
+
+Admin should be allowed to get the status for all the products 
+user should be able to update the status of the orders
+so in this last lesson of BACKEND we will be creating couple of routers
+
+@@@@@@@@@@@@@ order.js from controllers
+//11-5
+exports.getOrderStatus = (req, res) =>{
+    //this is how we need to grab the enum values from any model schema
+    res.json(Order.schema.path("status").enumValues); //not sure this is correct way of not H.C will go through the documentaion part and suggested us to do to and chekc whether the below written syntax is correct or not
+}
+
+//11-5
+exports.updateStatus = (req, res) =>{
+    Order.update(
+        {_id: req.body.orderId}, //this value we are grabbing from front end
+        {$set: {status: req.body.status}},
+        (err, updatedorder) => {
+            if(err){
+                return res.status(400).json({
+                    error:"Cannot update the order status"
+                });
+            }
+            res.json(updatedorder);
+        }
+    );
+};
+
+
+@@@@@@@@@@@ order.js from routers
+//H.C: 11-5: status of the order
+router.get("/order/status/:userId", isSignedIn, isAuthenticated, isAdmin, getOrderStatus);
+
+//11-5: explanation of below route path: we are going to the order mentioned in <:orderId>, want to update the order's status and who is updating, the user mentioned in <:userId> is updating. </oder> and </status> you can give any name and can place it anywhere in the below routes but the good way to write them is in the following way mentioned below
+router.put("/order/:orderId/status/:userId", isSignedIn, isAuthenticated, isAdmin, updateStatus);
+
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//******************************************************🤩🤩🤩 Section-12: Moving to Front End 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+CrashCourses of BootStrap, Reat and reatRoutes
+
+###################################################################################################################################################
+Lesson - 1 : Bootstrap Crash Course
+
+Crash course on BootStrap in LCO website: https://courses.learncodeonline.in/learn/home/Full-Stack-MERN-Bootcamp/section/73693/lesson/380476
+Bootstrap: https://getbootstrap.com/
+
+Learning the Bootstrap crash course:
+S12-L1-Bootstrap Crash Course
+
+😘🎈🥰Bootstrap alternatives which some people use:
+1. GridLayout
+2. FlexBox
+3. semntic UI
+4. materialized css
+
+😘🎈🥰Make Writing HTML job easy:
+emmet: https://emmet.io/
+Free course by H.C : https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa3JDSk5LTzRDX2t0V3RQdHNZUVdMWEF1RzhhQXxBQ3Jtc0ttTE9YUTdXVHpDYkxLMGZsN2RxZFdwNkNKVjg3MkR4ZGE2SDZ5RzBCUWlsS0xTUnlJcWVBUW14Y0VEbjJqeWdpMkcxOUF1MFowQ00zaFYwYXlsb1ZwZVdOeWVfSXZkRFowV3BIZTR2Nk9CZWlYdW5oOA&q=http%3A%2F%2Fcourses.learncodeonline.in%2Flearn%2Femmet-course
+example:
+i want ot have division with class name venki, inside i want to have h2, then inside h2 i want to have span then write
+div.hitesh>h2>span then press Tab button then it will create the html code like
+<div class='Venki'>
+    <h2> <span> </span> </h2>
+</div>
+😍😍😍
+
+LIVE SERVER
+Install live server by Ritwick Dey which will create temp server for us and save chages in app will reflect automatically like mono
+my live server address: http://127.0.0.1:5500/index.html
+
+
+Main Cheese PPl use in bootstrap are:
+1. components-> buttons: https://getbootstrap.com/docs/5.0/components/buttons/ 
+2. dividing pages - bootstrap has 12 coloumns to divide
+3. cards - https://getbootstrap.com/docs/5.0/components/card/
+4. forms
+5. Border
+6. etc...
+
+###################################################################################################################################################
+Lesson - 2 : ReactJS crash Course
+
+Youtube Crash Course: 4 sections over in this long video is
+1. common quetions and queries about reac.js - begineer and intermediate questions
+    a. what is react.js?
+    A JavaScript library for building user interfaces - https://reactjs.org/ 
+    react.js is library designed by facebook and now it is opensource and no licensing issues, so you can use it in any project.
+    React.js makes our job easier compared to other front end launagues, we can create COMPONENTS in react and these are our livesavers 😊. 
+    Example:
+    usually to create button many times we copy and paste code.
+    but in react.js we can use component as the reusable component, once that card or button is designed we can resue anywhere and whataver the elements inside that component like Button text, or card like images, or any text are super modifiable 😊 and can be inserted from anywhere this makes life much more easier. 
+
+    Becasuse of the below points react attracts bigger companies and it gained popularity.
+        React is fast reloading.
+        React is super optimization.
+        react give good performance.
+    
+    b. can react work with my ex ex stack. where x can be anything inlcuding RubyonRail, MySQL, node.js, django or any
+        react.js one of the good feature is LIGHT WEIGHT and IT's INJECTIBILITY.
+        we can use react.js with any existing X stack like ruby on rails, node, django etc
+        react.js = LEARN ONCE, WRITE ANYWHERE 😍🥰
+
+    c. Prereq that i should know if i have to learn react.js
+        although react is small library and can be lern quickly, its good that we should know Javascript first.
+
+    d. New addition in react.js? 22aug2019
+        react.js HOOKS
+            Hooks are new addition in the react.js
+            these are suplimental and must have things in the react.js
+            hooks implemented bcz in react initially there were no state management library and even for small project prople were using big Giants like REDUX 😶, so in order to totally get rid of redux hooks were implemented and they are obsolutely backward compatible 
+
+    e. class based components are going away from the react?
+        default one is functional component rather class component.
+        although "Funtional components" are center of attraction for many and "Hooks" are also there let me tell you that class based componets are not removed, you can still use it in the need places of your project.
+        React.js website says: use funtional component as 1st prio then class component if it is necessary.
+
+
+
+2. Jorgan keywords of react.js by H.C 
+    a. virtual DOM 
+        If someone reply to your video in youtube and some more ppl reply to same then u dont need to reload page.. its just display and it is taken care by virtual DOM
+
+    b. props and states
+        props - shortcut fo r propoerties
+        state - will learn in live coding
+ 
+    c. components (Both are same but class much more powerful than functional and can use to a next scale)
+        class based components 
+        functional components
+
+    d. Hooks
+        learn through any Y.T videos ex: https://www.youtube.com/watch?v=yviJikU4gwk
+        
+3. what tools to download and from where to download etc (all the tools mentioned by H.C are cross platform tools so windows, linux, mac or any user no need to worry)
+    nodejs
+    ReactJS - through nodejs will install library in our system reactjs
+    vs code / sublime / atom / bracket
+    Any browser
+
+4. small project - here we can aslo learn about file structre, recreating it, what points to take care and Stay away points as well (i.e the mistakes that we should not do)
+    ReactJS Crash Course By Hitesh choudary  https://www.youtube.com/watch?v=nvHeB32ICDM&t=813s
+
+    Hands On react's "to-do list" Project done by Venki - D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project
+            🤩🤩🤩🤩🤩🤩React.js Official website🤩🤩🤩🤩🤩🤩
+            https://reactjs.org/docs/create-a-new-react-app.html
+
+            Create React App
+
+            Create React App is a comfortable environment for learning React, and is the best way to start building a new single-page application in React.
+
+            It sets up your development environment so that you can use the latest JavaScript features, provides a nice developer experience, and optimizes your app for production. You’ll need to have Node >= 10.16 and npm >= 5.6 on your machine. To create a project, run:
+
+            npx create-react-app my-app
+            cd my-app
+            npm start
+
+            Note: npx on the first line is not a typo — it’s a package runner tool that comes with npm 5.2+.
+
+            🤩🤩🤩🤩🤩🤩npm module: create-react-app🤩🤩🤩🤩🤩🤩
+            https://www.npmjs.com/package/create-react-app
+
+            create-react-app
+            This package includes the global command for Create React App.
+
+            install
+            npm i create-react-app
+            npm -g i create-react-app - to install the app globally
+
+            😊😊😊😊😊Venki installing npm module - "create-react-app"😊😊😊😊😊
+            Im installing "create-react-app" here globally.... (should be administrator else it may not work)
+            D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project>npm install -g create-react-app
+
+            D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project>npm install -g create-react-app
+            C:\Users\I342170\AppData\Roaming\npm\create-react-app -> C:\Users\I342170\AppData\Roaming\npm\node_modules\create-react-app\index.js
+            + create-react-app@4.0.3
+            added 67 packages from 25 contributors in 19.735s
+
+            😊😊😊😊😊Venki Creating his first react application😊😊😊😊😊
+            Go to the folder where you want to create the react app then type "npx create-react-app <your_app_name CAPITAL LETTERS NOT ALLOWED"
+
+            Ex: Capital letters not allowed
+            D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project>npx create-react-app lcoToDoReactApp
+            Cannot create a project named "lcoToDoReactApp" because of npm naming restrictions:
+
+            * name can no longer contain capital letters
+
+            Please choose a different project name.
+
+            Ex: No Captial letters
+            D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project>npx create-react-app lco_to_do_react_app
+            OutPut:
+            $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project>npx create-react-app lco_to_do_react_app
+
+            Creating a new React app in D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app.
+            Installing packages. This might take a couple of minutes.
+            Installing react, react-dom, and react-scripts with cra-template...
+
+
+            > core-js@2.6.12 postinstall D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app\node_modules\babel-runtime\node_modules\core-js
+            > node -e "try{require('./postinstall')}catch(e){}"
+
+
+            > core-js@3.14.0 postinstall D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app\node_modules\core-js
+            > node -e "try{require('./postinstall')}catch(e){}"
+
+
+            > core-js-pure@3.14.0 postinstall D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app\node_modules\core-js-pure
+            > node -e "try{require('./postinstall')}catch(e){}"
+
+
+            > ejs@2.7.4 postinstall D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app\node_modules\ejs
+            > node ./postinstall.js
+
+            + cra-template@1.1.2
+            + react-scripts@4.0.3
+            + react@17.0.2
+            + react-dom@17.0.2
+            added 1917 packages from 706 contributors and audited 1920 packages in 655.757s
+
+            131 packages are looking for funding
+            run `npm fund` for details
+
+            found 80 moderate severity vulnerabilities
+            run `npm audit fix` to fix them, or `npm audit` for details
+
+            Initialized a git repository.
+
+            Installing template dependencies using npm...
+            npm WARN @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.13.12 requires a peer of @babel/core@^7.13.0 but none is installed. You must install peer dependencies yourself.
+            npm WARN tsutils@3.21.0 requires a peer of typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta but none is installed. You must install peer dependencies yourself.
+            npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):
+            npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+            npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\watchpack-chokidar2\node_modules\fsevents):
+            npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+            npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\webpack-dev-server\node_modules\fsevents):npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+            + web-vitals@1.1.2
+            + @testing-library/jest-dom@5.13.0
+            + @testing-library/user-event@12.8.3
+            + @testing-library/react@11.2.7
+            added 29 packages from 78 contributors and audited 1949 packages in 27.933s
+
+            131 packages are looking for funding
+            run `npm fund` for details
+
+            found 80 moderate severity vulnerabilities
+            run `npm audit fix` to fix them, or `npm audit` for details
+            Removing template package using npm...
+
+            npm WARN @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.13.12 requires a peer of @babel/core@^7.13.0 but none is installed. You must install peer dependencies yourself.
+            npm WARN tsutils@3.21.0 requires a peer of typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta but none is installed. You must install peer dependencies yourself.
+            npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):
+            npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+            npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\watchpack-chokidar2\node_modules\fsevents):
+            npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+            npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\webpack-dev-server\node_modules\fsevents):npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+            removed 1 package and audited 1948 packages in 11.977s
+
+            131 packages are looking for funding
+            run `npm fund` for details
+
+            found 80 moderate severity vulnerabilities
+            run `npm audit fix` to fix them, or `npm audit` for details
+
+            Created git commit.
+
+            Success! Created lco_to_do_react_app at D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app
+            Inside that directory, you can run several commands:
+
+            npm start
+                Starts the development server.
+
+            npm run build
+                Bundles the app into static files for production.
+
+            npm test
+                Starts the test runner.
+
+            npm run eject
+                Removes this tool and copies build dependencies, configuration files
+                and scripts into the app directory. If you do this, you can’t go back!
+
+            We suggest that you begin by typing:
+
+            cd lco_to_do_react_app
+            npm start
+
+            Happy hacking!
+            $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ END 
+
+            😊😊😊😊😊Venki : To Run my React application 🏃‍♂️🏃🏃‍♂️🏃‍♂️🏃‍♂️🥈🏃‍♂️🏃‍♂️🏃‍🏃‍♂️😊😊😊😊😊
+
+            PS D:\OnlineTutorialProjects\lco_reatjs_crashcourse\my_first_react_project\lco_to_do_react_app> npm start
+            Output:
+            You can now view lco_to_do_react_app in the browser.
+
+            Local:            http://localhost:3000
+            On Your Network:  http://10.98.215.248:3000
+
+            😍Folder structure which created by running - npm create-react-app lco_to_do_react_app
+            src -> App.js is the file where we start our code
+            src -> App.css is css style file
+            README.md - marked down files which tells about the project for user to read and understand
+            .gitignore - files which need to be ignored while uploading to github
+            node_modules - this folder will never be uploaded to git. user can download all the required modules by running "npm install" this will install all the required module and versions mentioned in the package.json 
+
+
+            😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊
+            //learning App.js
+
+            //🥰🥰🥰Example: 3 : basics todo react project by H.C
+            import React from "react";
+            import logo from "./LCO-logo-white.png";
+            import "./App.css";
+
+            //creating class based component
+            class App extends React.Component {
+
+            constructor(props){
+                super(props);
+                //now will create a state, state is nothing more rocket science, its an object
+                this.state = { 
+                //lets have an array of list which gonna store all the list items that we have and also new item
+                newItem : "", // newItem = "abc" is wrong, newItem : "abc" is right (use : and not = bcz state is an object)
+                list : []
+                }
+            }
+
+            //method addItem - it will add new todovalue item
+            addItem(todoValue){
+                //as soon user click on submit button, will take that value from input field and will fetch that in this method
+                //if the value is not empty then will get inside if loop
+                if (todoValue !== ""){
+                //newItem is an object 
+                const newItem = { 
+                    id:Date.now(),
+                    value: todoValue,
+                    isDone: false
+                };
+                /* 
+                //ES6 : Spread operator ... here it will assign all the values of this.state.list to list varaible
+                The syntax is three dots(...) followed by the array (or iterable*). 
+                It expands the array into individual elements. So, it can be used to expand the array in a places where zero or more elements are expected.
+                */
+                const list = [...this.state.list]; //ES6 : Spread operator ... here it will assign all the values of this.state.list to list varaible
+                list.push(newItem); //now i pushed my newitem to list va
+
+                //to play any state in react we need to play through setState() method only... dont touch state directly
+                this.setState({
+                    list,
+                    newItem: ""
+                });
+                }
+            }
+
+
+            //H.C : delete item
+            deleteItem(id){
+                //to delete a perticular list first listdown all the entries
+                const list = [...this.state.list];
+
+                //will use JS method filter(it expect you to pass an callback)
+                //the filter fills all items present in "list" to "updatedlist" if those iems id not equal to id of item passed in deletedItem parameter
+                const updatedlist = list.filter(item => item.id !== id);
+
+                //IMPORTANT! - update the state now using setstate
+                this.setState({
+                list: updatedlist
+                });
+            }
+
+
+            updateInput(Input){
+                this.setState({
+                newItem: Input
+                });
+            }
+
+
+            //if we are writing class based component, one thing that we must use is render() method
+            render(){
+                return(
+                <div>
+                    <img src={logo} width="100" height="100" className="logo" />
+                    <h1 className="app-title"> LCO TO do app</h1>
+                    <div className="container">
+                    Add an item....
+                    <br/>
+                    <input 
+                        type="text" 
+                        className="input-text" 
+                        Placeholder="Write a Todo" 
+                        required //this keyword makes it as mandatory
+                        value={this.state.newItem} //this will have teh value of this.state.newItem initially
+                        onChange = {e=> this.updateInput(e.target.value)} //whenver the user changes the value in the input box then it will call method updteInput() which will inturn update the current input box vlue to this.state.newItem
+                    />
+                    <button 
+                    className="add-btn"
+                    onClick = { () => this.addItem(this.state.newItem) }
+                    disabled= { !this.state.newItem.length} //😍tricky but interesting😍 disabled will become "false" when this.state.newItem.length is >0 bcz ! operator reverse true to false
+                    >Add Todo</button>
+                    <div className="list">
+                        <ul>
+                        {/* I want to loop thgough list now.
+                        will use JS's map to loop thoguh all values */}
+                        {this.state.list.map( item => {
+                            return(
+                            <li key={item.id}>
+                                <input 
+                                type="checkbox" 
+                                name="isDone" 
+                                checked={item.isDone}
+                                onChange={()=>{}} 
+                                />
+                                {item.value}
+                                <button
+                                className="btn"
+                                onClick={ ()=> this.deleteItem(item.id)}
+                                > 
+                                Delete
+                                </button>
+                            </li>
+                            );
+                        })}
+                        <li> 
+                            <input type="checkbox" name="" id="" />
+                            Record Youtube videos
+                            <button className="btn"> Delete</button>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                );
+            }
+            }
+
+            export default App;
+
+
+
+            /* //🥰🥰🥰Example: 2 : basics of react by H.C
+            import React from "react"; //with this code all the react's automatic functionality like virtual DOM reload and stuff automatically come up
+            import logo from "./logo.svg"; //use ./ if you want to import something in same directory, ../ if it in one directory back
+            import "./App.css";
+
+
+            //creating functional based component - just write a funtion and expot it out, the exported one is imported and handled in index.js
+            function App(){
+            //react app expect us to return atleast one component or one element in it
+            return(
+                //this is JSX and not HTML so all the tag elements should be ended by /
+                <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" />
+                    <p> learn from venki</p>
+                </header>
+                </div>
+            );
+            }
+
+            export default App; */
+
+            /* JSX is an inline markup that looks like HTML and gets transformed to JavaScript. 
+            A JSX expression starts with an HTML-like open tag, and ends with the corresponding closing tag. 
+            JSX tags support the XML self close syntax so you can optionally leave the closing tag off. */
+
+            /* Props and State
+            props
+            it means properties 
+            Whenever we want to pass information from one component to another component then we use properties 
+            Example : there is a button in one file and text info to that button need to pass from another file then we can use props
+
+            state
+            The State of a component is an object that holds some information that may change over the lifetime of the component
+            React components has a built-in state object. The state object is where you store property values that belongs to the component. When the state object changes, the component re-renders.
+            Using Hooks😀 we can manage state in Funtional component. If you dont want to use Hooks then to play with state you need to define Class Component and use constructor.
+            To maintain state: 1.functional component + Hooks or 2.Class component + constructor
+
+            */
+
+            /* //🥰🥰🥰Example: 1 : default one given by react
+            import logo from './logo.svg';
+            import './App.css';
+
+            function App() {
+            return (
+                <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>
+                    Edit <code>src/App.js</code> and save to reload. - OK....
+                    </p>
+                    <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                    Learn React
+                    </a>
+                </header>
+                </div>
+            );
+            }
+
+            export default App;
+            */
+
+
+            😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊
+            //learning App.css
+            /* //🥰🥰🥰Example: 3 : basics todo react project by H.C */
+            body {
+                background: #86109B;
+                font-size: 20px;
+            }
+            
+            /* logo is class so use . emmet - Emmet (formerly Zen Coding) is a set of plug-ins for text editors that allow for high-speed coding and editing in HTML, XML, XSLT, and other structured code formats via content assist. */
+            .logo {
+                display: block;
+                margin-left: auto; /* type ml then tab, emmet will automatically write margin-left */
+                margin-right: auto; /* type mr then tab, emmet will automatically write margin-right */
+            }
+            
+            
+            .input-text {
+                display: inline;
+                margin: 0;
+                border: none;
+                border-radius: 0.4rem;
+                padding: 10px;
+            }
+            
+            .list ul li button {
+                position: absolute;
+                right: 0%;
+                background: #f34541;
+                color: #fff !important;
+                text-transform: uppercase;
+                text-decoration: none;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding: 10px;
+                border-radius: 0.4rem;
+                display: inline-block;
+                border: none;
+            }
+            
+            .add-btn {
+                color: #fff !important;
+                text-transform: uppercase;
+                text-decoration: none;
+                background: #7313cb;
+                margin: 20px;
+                padding: 10px;
+                border-radius: 0.4rem;
+                display: inline-block;
+                border: none;
+            }
+            
+            .app-title {
+                text-align: center;
+                color: #fff;
+                font-size: 70px;
+            }
+            ul {
+                /* remove default padding and margin from ul*/
+                margin: 0px;
+                padding: 0px;
+            }
+            .list ul li {
+                display: block;
+                width: 100%;
+                text-decoration: none;
+                color: #000000;
+                background-color: #ffffff;
+                line-height: 30px;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+                border-bottom-color: #cccccc;
+                padding: 10px;
+                position: relative;
+            }
+            
+            .container {
+                color: #fff;
+                max-width: 500px;
+                margin: auto;
+            }
+
+            /* //🥰🥰🥰Example: 1 and 2 : "default one given by react" AND "basics of react by H.C" 
+            .App {
+                text-align: center;
+            }
+            
+            .App-logo {
+                height: 40vmin;
+                pointer-events: none;
+            }
+            
+            @media (prefers-reduced-motion: no-preference) {
+                .App-logo {
+                animation: App-logo-spin infinite 3s linear;
+                }
+            }
+            
+            .App-header {
+                background-color: #282c34;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: calc(10px + 2vmin);
+                color: white;
+            }
+            
+            .App-link {
+                color: #61dafb;
+            }
+            
+            @keyframes App-logo-spin {
+                from {
+                transform: rotate(0deg);
+                }
+                to {
+                transform: rotate(360deg);
+                }
+            }
+            */
+            
+            😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊😊
+
+
+###################################################################################################################################################
+Lesson - 3 : React router crash course
+
+Crash course on reatrouter in LCO website: https://courses.learncodeonline.in/learn/home/Full-Stack-MERN-Bootcamp/section/73693/lesson/380479
+
+creating new react app in my folder TestFront
+D:\OnlineTutorialProjects\lco_mern_bootcamp\testfront>npx create-react-app my_react_router
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Install 😍react-router-dom😍 package via npm - it allows us to having router at central control point 
+D:\OnlineTutorialProjects\lco_mern_bootcamp\testfront\my_react_router> npm install react-router-dom
+
+Output:
+        npm WARN @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.13.12 requires a peer of @babel/core@^7.13.0 but none is installed. You must install peer dependencies yourself.
+        npm WARN tsutils@3.21.0 requires a peer of typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta but none is installed. You must install peer dependencies yourself.
+        npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):
+        npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})       
+        npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\watchpack-chokidar2\node_modules\fsevents):
+        npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})      
+        npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\webpack-dev-server\node_modules\fsevents):
+        npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+        + react-router-dom@5.2.0
+        added 11 packages from 6 contributors and audited 1959 packages in 34.549s
+
+        131 packages are looking for funding
+        run `npm fund` for details
+
+        found 80 moderate severity vulnerabilities
+        run `npm audit fix` to fix them, or `npm audit` for details
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Run the application
+PS D:\OnlineTutorialProjects\lco_mern_bootcamp\testfront\my_react_router> npm start
+
+Output:
+        Compiled successfully!
+
+        You can now view my_react_router in the browser. 
+
+        Local:            http://localhost:3000        
+        On Your Network:  http://10.16.54.60:3000      
+
+        Note that the development build is not optimized.
+        To create a production build, use npm run build. 
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Good Extensions / plugins to use
+🌟 React Native Tools By Microsoft
+🌟 Simple React Snippets By Burke Holland 
+    rfc - to create react functional component
+
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Projet Begin
+
+The index.js is the file which holds all of the routing
+///////////////////index.js file
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Route, Link, Switch, BrowserRouter as Router} from "react-router-dom";
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+
+import App from './App';
+import User from './User';
+import Visit from './Visit';
+import notfound from "./notfound";
+
+//exact is keyword used so that first route also not mount with other components
+//with switch component we can make use to route default application if the path mentioned in browser is not correct
+const routing = (
+  <Router>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/User">User</Link></li>
+          <li><Link to="/Visit">Visit</Link></li>
+        </ul>
+      </div>
+    <Switch>
+      <Route exact path="/" component={App} /> 
+      <Route path="/User" component={User} />
+      <Route path="/Visit" component={Visit} />
+      <Route component={notfound} />
+    </Switch>
+  </Router>
+)
+
+ReactDOM.render( routing ,document.getElementById('root'));
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+////////////////// app.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> App component</h1>
+    </div>
+  )
+}
+
+
+////////////////// User.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> User component</h1>
+    </div>
+  )
+}
+
+
+///////////////// Visit.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> Visit component</h1>
+    </div>
+  )
+}
+
+///////////////// notfound.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> 404 Page not found</h1>
+    </div>
+  )
+}
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//************************************************🤩🤩🤩 Section- 13 : Connecting to front end to backend 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+🌟Here we connect fronend to backend
+🌟and also to create css file
+
+go to "C:\Windows\System32\cmd.exe" fire up comand promt and run the command "npx create-react-app projectfrontend" (before this you should have installed create-react-app via command "npm -g i create-react-app")
+D:\OnlineTutorialProjects\lco_mern_bootcamp>npx create-react-app projectfrontend
+
+😡😁😁😡
+after the project structre is created
+remove the not needed file as of now.. they are (epect App.js remove all other stuff to keep the project neat)-
+src-> logo.svg
+src-> serviceWorker.js
+src-> setupTests.js
+src-> App.css
+src-> App.test.js
+src-> index.css
+src-> index.js
+
+###################################################################################################################################################
+Lesson - 1 : Create a react application
+
+go to "C:\Windows\System32\cmd.exe" fire up comand promt and run the command "npx create-react-app projectfrontend" (before this you should have installed create-react-app via command "npm -g i create-react-app")
+D:\OnlineTutorialProjects\lco_mern_bootcamp>npx create-react-app projectfrontend
+
+
+
+###################################################################################################################################################
+Lesson - 2 : prepare the folder structure
+
+###################################################################################################################################################
+Lesson - 3 : remove all error first
+
+###################################################################################################################################################
+Lesson - 4 : how to add CSS in react app
+
+###################################################################################################################################################
+Lesson - 5 : insert backend into front end env
+
+###################################################################################################################################################
+Lesson - 6 : take full advantage of base component
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//**************************************************🤩🤩🤩 Section - 14:  Navigation and Authenticatio🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+###################################################################################################################################################
+Lesson - 1 :
+
+###################################################################################################################################################
+Lesson - 2 :
+
+###################################################################################################################################################
+Lesson - 3 :
+
+###################################################################################################################################################
+Lesson - 4 :
+
+###################################################################################################################################################
+Lesson - 5 :
+
+###################################################################################################################################################
+Lesson - 6 :
+
+###################################################################################################################################################
+Lesson - 7 :
+
+###################################################################################################################################################
+Lesson - 8 :
+
+###################################################################################################################################################
+Lesson - 9 :
+
+###################################################################################################################################################
+Lesson - 10 :
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//*************************************************🤩🤩🤩 Section - 15 : Restricated Routes and Profiles 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+###################################################################################################################################################
+Lesson - 1 :
+
+###################################################################################################################################################
+Lesson - 2 :
+
+###################################################################################################################################################
+Lesson - 3 :
+
+###################################################################################################################################################
+Lesson - 4 :
+
+###################################################################################################################################################
+Lesson - 5 :
+
+###################################################################################################################################################
+Lesson - 6 :
+
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//****************************************************🤩🤩🤩 Section - 16 : Design an Admin panel🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+###################################################################################################################################################
+Lesson - 1 :
+
+###################################################################################################################################################
+Lesson - 2 :
+
+###################################################################################################################################################
+Lesson - 3 :
+
+###################################################################################################################################################
+Lesson - 4 :
+
+###################################################################################################################################################
+Lesson - 5 :
+
+###################################################################################################################################################
+Lesson - 6 :
+
+###################################################################################################################################################
+Lesson - 7 :
+
+###################################################################################################################################################
+Lesson - 8 :
+
+###################################################################################################################################################
+Lesson - 9 :
+
+###################################################################################################################################################
+Lesson - 10 :
+
+###################################################################################################################################################
+Lesson - 11 :
+
+###################################################################################################################################################
+Lesson - 12 :
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//****************************************************🤩🤩🤩 Section - 17 : Purcahse Card and Cart🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+###################################################################################################################################################
+Lesson - 1 :
+
+###################################################################################################################################################
+Lesson - 2 :
+
+###################################################################################################################################################
+Lesson - 3 :
+
+###################################################################################################################################################
+Lesson - 4 :
+
+###################################################################################################################################################
+Lesson - 5 :
+
+###################################################################################################################################################
+Lesson - 6 :
+
+###################################################################################################################################################
+Lesson - 7 :
+
+###################################################################################################################################################
+Lesson - 8 :
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//**********************************************🤩🤩🤩 Section - 18 : Integrating Stripe - TRACK 1 - Optional 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+###################################################################################################################################################
+Lesson - 1 :
+
+###################################################################################################################################################
+Lesson - 2 :
+
+###################################################################################################################################################
+Lesson - 3 :
+
+###################################################################################################################################################
+Lesson - 4 :
+
+###################################################################################################################################################
+Lesson - 5 :
+
+###################################################################################################################################################
+Lesson - 6 :
+
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//********************************************🤩🤩🤩 Section - 19 : Integrating Paypal with with Card -REGULAR TRACK 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+###################################################################################################################################################
+Lesson - 1 :
+
+###################################################################################################################################################
+Lesson - 2 :
+
+###################################################################################################################################################
+Lesson - 3 :
+
+###################################################################################################################################################
+Lesson - 4 :
+
+###################################################################################################################################################
+Lesson - 5 :
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//********************************************🤩🤩🤩 Section - 20: Empty card bugs and optional orders 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+
+
+
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+//****************************************************🤩🤩🤩 Section - 21:  Final Certification exam 🤩🤩🤩******************************************************************
+********************************************************🤩🤩🤩😁😀😂🤣😃😄😅😆😊😎😋😉😗🤩🤩🤩******************************************************************
+

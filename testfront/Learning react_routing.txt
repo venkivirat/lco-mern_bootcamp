@@ -1,0 +1,142 @@
+###################################################################################################################################################
+Lesson - 3 : React router crash course
+
+Crash course on reatrouter in LCO website: https://courses.learncodeonline.in/learn/home/Full-Stack-MERN-Bootcamp/section/73693/lesson/380479
+
+creating new react app in my folder TestFront
+D:\OnlineTutorialProjects\lco_mern_bootcamp\testfront>npx create-react-app my_react_router
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Install 😍react-router-dom😍 package via npm - it allows us to having router at central control point 
+D:\OnlineTutorialProjects\lco_mern_bootcamp\testfront\my_react_router> npm install react-router-dom
+
+Output:
+        npm WARN @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.13.12 requires a peer of @babel/core@^7.13.0 but none is installed. You must install peer dependencies yourself.
+        npm WARN tsutils@3.21.0 requires a peer of typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta but none is installed. You must install peer dependencies yourself.
+        npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):
+        npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})       
+        npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\watchpack-chokidar2\node_modules\fsevents):
+        npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})      
+        npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules\webpack-dev-server\node_modules\fsevents):
+        npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+        + react-router-dom@5.2.0
+        added 11 packages from 6 contributors and audited 1959 packages in 34.549s
+
+        131 packages are looking for funding
+        run `npm fund` for details
+
+        found 80 moderate severity vulnerabilities
+        run `npm audit fix` to fix them, or `npm audit` for details
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Run the application
+PS D:\OnlineTutorialProjects\lco_mern_bootcamp\testfront\my_react_router> npm start
+
+Output:
+        Compiled successfully!
+
+        You can now view my_react_router in the browser. 
+
+        Local:            http://localhost:3000        
+        On Your Network:  http://10.16.54.60:3000      
+
+        Note that the development build is not optimized.
+        To create a production build, use npm run build. 
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Good Extensions / plugins to use
+🌟 React Native Tools By Microsoft
+🌟 Simple React Snippets By Burke Holland 
+    rfc - to create react functional component
+
+
+😊😊😊😊😊😊😊😊😊😊😊😊
+Projet Begin
+
+The index.js is the file which holds all of the routing
+///////////////////index.js file
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Route, Link, Switch, BrowserRouter as Router} from "react-router-dom";
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+
+import App from './App';
+import User from './User';
+import Visit from './Visit';
+import notfound from "./notfound";
+
+//exact is keyword used so that first route also not mount with other components
+//with switch component we can make use to route default application if the path mentioned in browser is not correct
+const routing = (
+  <Router>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/User">User</Link></li>
+          <li><Link to="/Visit">Visit</Link></li>
+        </ul>
+      </div>
+    <Switch>
+      <Route exact path="/" component={App} /> 
+      <Route path="/User" component={User} />
+      <Route path="/Visit" component={Visit} />
+      <Route component={notfound} />
+    </Switch>
+  </Router>
+)
+
+ReactDOM.render( routing ,document.getElementById('root'));
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+////////////////// app.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> App component</h1>
+    </div>
+  )
+}
+
+
+////////////////// User.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> User component</h1>
+    </div>
+  )
+}
+
+
+///////////////// Visit.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> Visit component</h1>
+    </div>
+  )
+}
+
+///////////////// notfound.js
+import React from "react";
+
+export default function App(){
+  return(
+    <div>
+      <h1> 404 Page not found</h1>
+    </div>
+  )
+}

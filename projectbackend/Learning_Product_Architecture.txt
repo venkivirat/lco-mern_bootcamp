@@ -1,0 +1,81 @@
+Full Stack Mern Bootcamp By Hitesh choudary ( https://courses.learncodeonline.in/learn/home/Full-Stack-MERN-Bootcamp/section/72265/lesson/370585 )
+
+Section - 8
+Project - SellTshirtBackEnd (Keys: ⭐parameter_passing_i_guessCheck?? ❗❗Middlewares ✅completed ❌YettoDO )
+Models:✅
+    1. user.js ✅
+    2. product.js ✅
+    3. category.js ✅
+    4. order.js ✅
+
+Routes: 
+    1. Authentication ✅
+        a. signup-post ✅
+        b. signin-post ✅
+        c. signout-post ✅
+    2. User ✅
+        a. read-get ✅
+        b. update-put ✅
+        c. parameterExtrat-params⭐ ✅
+        d. purchaselist-get ✅
+    3. category (its address whether winter collection or summer collection etc)
+        a. /category/create/:userId-POST (create)
+        b. categoryID PARAM (paramaeter Extractor)⭐
+        c. /category/categoryID - GET (read)
+        d. /category/categoryID/:userID - PUT (update)
+        e. /category/categoryID/:userID - DELETE (remove)
+        f. /categories - GET (getall)
+    4. order
+        a. /order/create/:userID - POST (create)
+        b. orderByID PARAMS⭐
+        c. /order/list/:userID - GET
+        d. /order/status/:userID - GET
+        e. /order/:orderID/status/:userID - PUT
+    5. Product
+        a. productId PARAM (parameterExtractor)⭐
+        b. /product/photo/:productId GET
+        c. /product/create/:userId POST
+        d. /product/:productId GET
+        e. /product/:productId/:userId DELETE
+        f. /product/:productId/:userId PUT
+        g. /products/categories GET
+    
+    6. Payment System
+
+Controllers:
+    1. auth
+        a. signup ✅
+        b. signin ✅
+        c. signout ✅
+        d. isAdmin ❗❗ ✅
+        e. isAuthenticated ❗❗ ✅
+        f. checker for token ❗❗ ✅
+    2. user
+        a. getUserById⭐ ✅
+        b. read ✅
+        c. update ✅
+        d. userPurchaseList ✅
+        e. pushOrderInPurchaseList ✅
+    3. catergory (its address whether winter collection or summer collection etc)
+        a. create
+        b. categoryById⭐
+        c. read
+        d. update
+        e. remove
+        f. getAll
+    4. order
+        a. orderById ❗❗
+        b. create
+        c. listOrder
+        d. updateOrderStaus
+        e. getOrderStatus
+    5. product
+        a. photo ❗❗
+        b. maintainStock ❗❗
+        c. create
+        d. getProductById ❗❗
+        e. read
+        f. remove
+        g. update
+        h. listCategories
+        i. list ❓

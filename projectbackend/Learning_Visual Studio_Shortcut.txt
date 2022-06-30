@@ -1,0 +1,131 @@
+Venki learnings - shortcut keys
+
+Shift + Alt + ArrowDown - To duplicate the line 😍
+
+shift + alt + A - MultiLine Comment 😍
+
+ctrl + c - place cursor at anywhere in the line which you want to copy and press ctrl+c then it will copy entrire line 😍
+
+
+
+******************************************************************************************************************************************************
+Top10 - VSCode Windows shortcut ( https://www.dotnettricks.com/learn/visualstudio/top-10-visual-studio-keyboard-shorcuts )
+F5 & Ctrl-F5
+F5 is used to start your project in debug mode and Ctrl-F5 is used to start your project without debug mode.
+
+F7 & Shift-F7
+F7 is used to show code view of your webpage.
+Shift-F7 is used to show design view of your webpage.
+
+F6 / Shift-F6 / Ctrl-Shift-B
+All of the above shortcuts are used to build the project or solutions.
+
+Ctrl-Shift-A & Alt-Shift-A
+Ctrl-Shift-A is used to add new item to your project.
+Alt-Shift-A is used to add existing item to your project.
+
+Ctrl-K + Ctrl-C & Ctrl-K + Ctrl-U 😍
+Ctrl-K + Ctrl-C is used to do comment a selected block of code. (comment each line)
+Ctrl-K + Ctrl-U is used to do uncomment a selected block of code.
+
+Ctrl-M + Ctrl-O & Ctrl-M + Ctrl-P
+Ctrl-M + Ctrl-O is used to collapse all code to definitions.
+Ctrl-M + Ctrl-P is used to expand all code
+
+Ctrl-K + Ctrl-S & Alt-Shift-Arrow(Right,Left,Bottom,Top) 😍
+Ctrl-K + Ctrl-S is used to surrounded a block of code to an specific block or control.
+Alt-Shift-Arrow(Right,Left,Bottom,Top) are used to copy, paste, write vertically as shown in fig.
+
+Ctrl-(+) + Ctrl-. & F12
+Ctrl-(+) + Ctrl-. is used to display smarttag under the red line that provides the options for fixing the code problem.
+F12 is used to navigate to the definition of an instance, variable, class etc.
+
+Ctrl-Shift-F, Ctrl-F & Ctrl-H
+Ctrl-Shift-F is used to find all the ocuurance of a string with in entire solution and display find result window as shown below.
+Ctrl-F is used to find a string in the current document, project and all open documents one by one. Ctrl-H is used to replace a string by a new string in current document, project and entire solution as you want to replace.
+
+F4 & Ctrl-Alt-L
+F4 is used to show property window.
+
+******************************************************************************************************************************************************
+https://www.dotnettricks.com/learn/visualstudio/visual-studio-useful-keyboard-shortcut-keys
+
+General Shortcut Keys
+
+Shortcut	Description
+Ctrl-X or Shift-Delete or Ctrl-L	Cuts entire line or Cuts the currently selected item to the clipboard
+Ctrl-Del	Delete next "word"
+Ctrl-C or Ctrl-Insert	Copies the currently selected item to the clipboard
+Ctrl-V or Shift-Insert	Pastes the item from the clipboard at the cursor location
+Ctrl-Z or Alt-Backspace	Undo the previous editing action
+Ctrl-Space	To see intelligence dialog
+Ctrl-Y or Ctrl-Shift-Z	Redo the previous undo action
+Ctrl-S	Saves the current selected file
+Ctrl-Shift-S	Saves all files and projects
+Ctrl-P	Displays the Print dialog
+F7	Switches from the design view to the code view in the editor
+Shift-F7	Switches from the code view to the design view in the editor
+Shift-F8 or F8	Navigate to compile time errors
+Alt-Shift-A	Add Existing Item(file) to selected project
+Ctrl-Shift-A	Add New Item(file) to selected project
+Shift-F9	Display the selected item quick output means contains value while debugging
+F12	Moves the cursor to the selected method, variable, class definition.
+Shift-F12	Finds the reference to the selected method, variable, class or the item under the cursor
+Ctrl-}	Match curly braces, brackets or compiler directives
+Ctrl-Shift-}	Select text between matched braces, brackets or compiler directives
+
+Text Manipulation
+Shortcut	Description
+Tab	Indents the currently selected line or lines by one tab stop. If there is no selection, this inserts a tab stop
+Tab-Tab	Complete the syntax of an item. Example- Write for and now press Tab-Tab, then for loop syntax will be automatically completed. Similarly it works for property, index, class syntax.
+Shift-Tab	Moves current line or selected lines one tab stop to the left
+Backspace or Shift-Backspace	Deletes one character to the left of the cursor
+Ctrl-K, Ctrl-C	Marks the current line or selected lines of code as a comment, using the correct comment syntax for the programming language
+Ctrl-K, Ctrl-U	Removes the comment syntax from the current line or currently selected lines of code
+Ctrl-K, Ctrl-D	Do proper alignment of all the code of design view and code view
+Ctrl-T or Shift-Enter	Swaps the characters on either side of the cursor. (For example, AC|BD becomes AB|CD.) Available only in text editors
+Ctrl-U	Changes the selected text to lowercase characters
+Ctrl-Shift-U	Changes the selected text to uppercase characters
+Ctrl-Shift-Right Arrow	Select the entire word with space from start to end
+Ctrl-Right Arrow	Move the cursor in forward direction word by word
+Shift-End	Select the entire line from start to end
+Shift-Home	Select the entire line from end to start
+Shift-Alt-Arrows or Alt-Mouse	Column wise text selection for text manipulation
+Ctrl-Delete	Deletes the word to the right of the cursor
+Ctrl-Backspace	Deletes the word to the left of the cursor
+Ctrl-G	Jump to line number or go to line
+
+
+Project Related
+Shortcut	Description
+Ctrl-Shift-B	Builds the solution
+Ctrl-N	Displays the New File dialog. Note: files created this way are not associated with a project. Use Ctrl-Shift-A to add a new file in a project
+Ctrl-Shift-N	Displays the New Project dialog
+Ctrl-O	Displays the Open File dialog
+Ctrl-Shift-O	Displays the Open Project dialog
+Ctrl-M-O	Collapse all the methods, classes, regions in the current code behind or class file
+Ctrl-M-P or Ctrl-M-L	Expands all the methods, classes, regions in the current code behind or class file
+Ctrl-F	Displays the Find dialog
+Ctrl-H	Displays the Replace dialog
+Ctrl-Shift-F	Find the reference of selected item into entire solution.
+Ctrl-Tab	Move from one opened file to another opened file in visual studio.
+F9	Sets or removes a breakpoint at the current line
+Ctrl-F9	Enables or disables the breakpoint on the current line of code. The line must already have a breakpoint for this to work
+F5	Runs the code with invoking the debugger.
+Ctrl-F5	Runs the code without invoking the debugger.
+F4 or Alt-Enter	Displays the Properties window, which lists the design-time properties and events for the currently selected item
+Ctrl-Alt-S	Displays the Server Explorer window, which allows you to view and manipulate database servers, event logs, message queues, web services, and many other operating system services
+Ctrl-Alt-L	Displays the Solution Explorer, which lists the projects and files in the current solution
+Ctrl-Alt-X	Displays the Toolbox, which contains controls and other items that can be dragged into editor and designer windows
+Ctrl-Alt-I	Displays the Immediate window, where you can find the controls or variables values or can do data manipulation during debugging
+
+
+***************************************************** Useful VS wesistes ******************************************************************************
+https://www.dotnettricks.com/
+
+Node.js development with Visual Studio
+https://www.dotnettricks.com/learn/visualstudio/nodejs-development-with-visual-studio
+
+Visual Studio Debug VS Release mode
+https://www.dotnettricks.com/learn/visualstudio/visual-studio-debug-vs-release-mode
+
